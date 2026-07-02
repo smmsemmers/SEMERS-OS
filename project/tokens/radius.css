@@ -1,0 +1,11 @@
+/* SEMERS OS — corner radii.
+   Soft but not pill-like for containers; full pills only for status chips. */
+:root {
+  --radius-xs:   6px;  /* tags, small qty boxes */
+  --radius-sm:   8px;  /* inputs, dropdowns */
+  --radius-md:   9px;  /* buttons */
+  --radius-lg:   12px; /* KPI cards */
+  --radius-xl:   14px; /* main panels, tables */
+  --radius-2xl:  16px; /* modals */
+  --radius-pill: 20px; /* status pills, badges */
+}

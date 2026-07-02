@@ -1,0 +1,33 @@
+/* SEMERS OS — typography.
+   IBM Plex Sans for everything textual; IBM Plex Mono for numerics, order IDs,
+   barcodes, quantities, KPI values — anything that should align in columns.
+   Eyebrow labels are Mono, uppercase, wide tracking. */
+:root {
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* sizes */
+  --fs-display:   25px; /* screen H1 */
+  --fs-h2:        16px; /* card titles */
+  --fs-h3:        15px; /* sub-panel titles */
+  --fs-kpi:       26px; /* KPI numerals (mono) */
+  --fs-body:      13px; /* table cells, controls */
+  --fs-body-sm:   12.5px;
+  --fs-label:     11.5px; /* field labels */
+  --fs-eyebrow:   11px;   /* mono uppercase eyebrow */
+  --fs-micro:     10.5px;
+
+  /* weights */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700;
+
+  /* tracking */
+  --track-eyebrow: 1.4px;
+  --track-tight:   -0.3px;
+
+  /* line heights */
+  --lh-tight: 1.1;
+  --lh-body:  1.45;
+}

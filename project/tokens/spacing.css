@@ -1,0 +1,21 @@
+/* SEMERS OS — spacing scale.
+   Dashboards use a calm 4px-based rhythm. Card padding ~18-20px,
+   grid gaps 12px (KPI rows) / 18px (column layouts), table cell padding 13px. */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;  /* KPI grid gap */
+  --space-4: 14px;
+  --space-5: 18px;  /* column gap, card padding */
+  --space-6: 20px;  /* card horizontal padding */
+  --space-7: 26px;  /* screen horizontal padding */
+  --space-8: 30px;
+  --space-10: 40px;
+
+  --cell-pad-y: 13px; /* table cell vertical padding */
+  --cell-pad-x: 16px;
+  --control-h:  38px; /* inputs, dropdowns, secondary buttons */
+  --button-h:   40px; /* primary buttons */
+  --sidebar-w:  236px;
+  --topbar-h:   62px;
+}

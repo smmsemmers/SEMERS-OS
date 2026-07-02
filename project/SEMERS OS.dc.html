@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,300,0,0&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'IBM Plex Sans',system-ui,sans-serif;color:#2A2722;background:#F1EEE7;-webkit-font-smoothing:antialiased}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#D6D0C4;border-radius:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+  .ms{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-feature-settings:'liga';font-feature-settings:'liga'}
+  @keyframes scl-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @keyframes scl-drawer{from{transform:translateX(100%)}to{transform:none}}
+  @keyframes scl-overlay{from{opacity:0}to{opacity:1}}
+  @keyframes scl-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+</style>
+</helmet>
+<div style="display:flex;height:100vh;width:100%;overflow:hidden;background:#F1EEE7">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside style="width:236px;flex:none;background:#23211C;color:#CFC9BC;display:flex;flex-direction:column;height:100%">
+    <div style="padding:22px 20px 18px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)">
+      <div style="width:34px;height:34px;border-radius:9px;background:#7FA45C;display:flex;align-items:center;justify-content:center;flex:none">
+        <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:16px;color:#1B1A16">S</span>
+      </div>
+      <div style="line-height:1.1">
+        <div style="font-weight:600;font-size:15px;color:#F4F1EA;letter-spacing:.2px">SEMERS OS</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8B8474;letter-spacing:.5px">v1.0 · OPERATIONS</div>
+      </div>
+    </div>
+
+    <nav onClick="{{ onNav }}" style="flex:1;overflow-y:auto;padding:12px 12px 8px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:1.2px;color:#6E685A;padding:8px 10px 6px">УПРАВЛЕНИЕ</div>
+      <sc-for list="{{ navTop }}" as="item" hint-placeholder-count="3">
+        <div data-screen="{{ item.key }}" style="display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:8px;cursor:pointer;margin-bottom:2px;font-size:13.5px;color:{{ item.color }};background:{{ item.bg }};font-weight:{{ item.weight }}">
+          <span class="ms" style="font-size:19px;color:{{ item.iconColor }}">{{ item.icon }}</span>
+          <span style="flex:1">{{ item.label }}</span>
+          <sc-if value="{{ item.badge }}" hint-placeholder-val=""><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;background:{{ item.badgeBg }};color:{{ item.badgeColor }};padding:1px 6px;border-radius:20px;font-weight:600">{{ item.badge }}</span></sc-if>
+        </div>
+      </sc-for>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:1.2px;color:#6E685A;padding:16px 10px 6px">РОЛЕВЫЕ ПАНЕЛИ</div>
+      <sc-for list="{{ navRoles }}" as="item" hint-placeholder-count="5">
+        <div data-screen="{{ item.key }}" style="display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:8px;cursor:pointer;margin-bottom:2px;font-size:13.5px;color:{{ item.color }};background:{{ item.bg }};font-weight:{{ item.weight }}">
+          <span class="ms" style="font-size:19px;color:{{ item.iconColor }}">{{ item.icon }}</span>
+          <span style="flex:1">{{ item.label }}</span>
+          <sc-if value="{{ item.badge }}" hint-placeholder-val=""><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;background:{{ item.badgeBg }};color:{{ item.badgeColor }};padding:1px 6px;border-radius:20px;font-weight:600">{{ item.badge }}</span></sc-if>
+        </div>
+      </sc-for>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:1.2px;color:#6E685A;padding:16px 10px 6px">ДАННЫЕ</div>
+      <sc-for list="{{ navData }}" as="item" hint-placeholder-count="4">
+        <div data-screen="{{ item.key }}" style="display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:8px;cursor:pointer;margin-bottom:2px;font-size:13.5px;color:{{ item.color }};background:{{ item.bg }};font-weight:{{ item.weight }}">
+          <span class="ms" style="font-size:19px;color:{{ item.iconColor }}">{{ item.icon }}</span>
+          <span style="flex:1">{{ item.label }}</span>
+          <sc-if value="{{ item.badge }}" hint-placeholder-val=""><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;background:{{ item.badgeBg }};color:{{ item.badgeColor }};padding:1px 6px;border-radius:20px;font-weight:600">{{ item.badge }}</span></sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="padding:12px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px">
+      <div style="width:32px;height:32px;border-radius:50%;background:#C7503F;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex:none">ГЛ</div>
+      <div style="flex:1;line-height:1.2;min-width:0">
+        <div style="font-size:13px;color:#EDE9E0;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Глеб</div>
+        <div style="font-size:11px;color:#8B8474">Управляющий</div>
+      </div>
+      <span class="ms" style="font-size:18px;color:#8B8474;cursor:pointer">unfold_more</span>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main style="flex:1;display:flex;flex-direction:column;height:100%;min-width:0">
+    <!-- TOPBAR -->
+    <header style="flex:none;background:#FBFAF7;border-bottom:1px solid #E4DFD4;padding:0 26px;height:62px;display:flex;align-items:center;gap:18px">
+      <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:#8C8576;min-width:0">
+        <span class="ms" style="font-size:18px;color:#A39C8B">{{ crumbIcon }}</span>
+        <span style="color:#B4AD9C">SEMERS OS</span>
+        <span style="color:#CFC8B8">/</span>
+        <span style="color:#3A362E;font-weight:600;white-space:nowrap">{{ crumbTitle }}</span>
+      </div>
+      <div style="flex:1"></div>
+      <div style="position:relative;width:300px">
+        <span class="ms" style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:18px;color:#A39C8B">search</span>
+        <input placeholder="Поиск: заказ, клиент, SKU…" style="width:100%;height:38px;border:1px solid #E1DBCE;background:#fff;border-radius:9px;padding:0 12px 0 36px;font-family:'IBM Plex Sans';font-size:13px;color:#2A2722;outline:none" />
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #E1DBCE;border-radius:9px;height:38px;padding:0 12px;cursor:pointer">
+        <span class="ms" style="font-size:17px;color:#7E776A">calendar_today</span>
+        <span style="font-size:12.5px;color:#4A463C;font-weight:500">Июнь 2026</span>
+        <span class="ms" style="font-size:18px;color:#A39C8B">expand_more</span>
+      </div>
+      <div style="position:relative;width:38px;height:38px;border:1px solid #E1DBCE;background:#fff;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+        <span class="ms" style="font-size:19px;color:#6E675A">notifications</span>
+        <span style="position:absolute;top:7px;right:8px;width:7px;height:7px;border-radius:50%;background:#C7503F;border:1.5px solid #fff"></span>
+      </div>
+      <button onClick="{{ openForm }}" style="display:flex;align-items:center;gap:7px;height:38px;padding:0 15px;background:#5C8A3F;border:none;border-radius:9px;color:#fff;font-family:'IBM Plex Sans';font-size:13px;font-weight:600;cursor:pointer">
+        <span class="ms" style="font-size:18px">add</span> Создать заказ
+      </button>
+    </header>
+
+    <!-- SCREEN CONTAINER -->
+    <div style="flex:1;overflow-y:auto;padding:26px 30px 60px">
+
+      <!-- ============ COMMAND CENTER ============ -->
+      <sc-if value="{{ isCommand }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex;align-items:flex-end;gap:16px;margin-bottom:18px">
+          <div>
+            <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">ПУЛЬС КОМПАНИИ · 27 ИЮНЯ 2026</div>
+            <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Command Center</h1>
+            <div style="font-size:13.5px;color:#6E685D;margin-top:4px">Весь бизнес за пять минут — деньги, риски и красные флаги.</div>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ cmdFilters }}" as="f" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:6px;height:34px;padding:0 11px;background:#fff;border:1px solid #E1DBCE;border-radius:8px;cursor:pointer;font-size:12.5px;color:#5A5448">
+                <span style="color:#A79F8E">{{ f.k }}</span><span style="font-weight:600;color:#3A362E">{{ f.v }}</span>
+                <span class="ms" style="font-size:17px;color:#B4AD9C">expand_more</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- KPI GRID -->
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px">
+          <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="10">
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:12px;padding:13px 15px;position:relative;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:{{ k.accent }}"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">
+                <span style="font-size:11.5px;color:#7C7565;font-weight:500;letter-spacing:.1px">{{ k.label }}</span>
+                <span class="ms" style="font-size:18px;color:{{ k.accent }}">{{ k.icon }}</span>
+              </div>
+              <div style="font-family:'IBM Plex Mono';font-size:25px;font-weight:600;color:#2A2722;line-height:1;letter-spacing:-.5px">{{ k.val }}</div>
+              <div style="font-size:11px;color:#9C9586;margin-top:7px;line-height:1.35">{{ k.sub }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- TWO COLUMNS -->
+        <div style="display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:18px">
+
+            <!-- RED FLAGS -->
+            <div onClick="{{ onFlagClick }}" style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px">
+                <span class="ms" style="font-size:20px;color:#C7503F">flag</span>
+                <h2 style="margin:0;font-size:16px;font-weight:600">Красные флаги</h2>
+                <span style="font-family:'IBM Plex Mono';font-size:11px;color:#9C9586;background:#F4F1E9;padding:2px 8px;border-radius:20px">5 активных</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:9px">
+                <sc-for list="{{ flags }}" as="f" hint-placeholder-count="5">
+                  <div style="display:flex;gap:12px;padding:12px 14px;background:{{ f.fbg }};border-radius:10px;align-items:flex-start">
+                    <span class="ms" style="font-size:19px;color:{{ f.fbar }};margin-top:1px">{{ f.ficon }}</span>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:13.5px;font-weight:600;color:#33302A">{{ f.title }}</div>
+                      <div style="font-size:12px;color:#6E685D;margin-top:3px;line-height:1.4">{{ f.desc }}</div>
+                    </div>
+                    <div data-to="{{ f.to }}" style="display:flex;align-items:center;gap:4px;flex:none;align-self:center;font-size:12px;font-weight:600;color:{{ f.fic }};cursor:pointer;white-space:nowrap">{{ f.act }}<span class="ms" style="font-size:16px">chevron_right</span></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- REVENUE CHART -->
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+                <h2 style="margin:0;font-size:16px;font-weight:600">Выручка по месяцам</h2>
+                <span style="font-size:12px;color:#9C9586">2026 · тыс. €</span>
+                <div style="flex:1"></div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:11.5px;color:#6E685D"><span style="width:10px;height:10px;border-radius:3px;background:#7FA45C"></span>Выручка</div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:11.5px;color:#6E685D"><span style="width:14px;height:2px;background:#5E7A8C"></span>Выход, т</div>
+              </div>
+              <div style="display:flex;align-items:flex-end;gap:20px;height:180px;padding:0 6px">
+                <sc-for list="{{ revBars }}" as="b" hint-placeholder-count="6">
+                  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end">
+                    <div style="font-family:'IBM Plex Mono';font-size:12px;font-weight:600;color:#3A362E">{{ b.v }}</div>
+                    <div style="width:100%;max-width:46px;border-radius:7px 7px 0 0;height:{{ b.barH }};background:{{ b.barColor }};position:relative"></div>
+                    <div style="font-size:12px;color:#8C8576;font-weight:500">{{ b.m }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- PROBLEM ORDERS -->
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px 6px">
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
+                <h2 style="margin:0;font-size:16px;font-weight:600">Проблемные заказы</h2>
+                <div style="flex:1"></div>
+                <span style="font-size:12.5px;color:#5C8A3F;font-weight:600;cursor:pointer">Все заказы →</span>
+              </div>
+              <table style="width:100%;border-collapse:collapse;font-size:13px">
+                <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase">
+                  <th style="padding:10px 8px;font-weight:500">Заказ</th><th style="padding:10px 8px;font-weight:500">Клиент</th>
+                  <th style="padding:10px 8px;font-weight:500">Менеджер</th><th style="padding:10px 8px;font-weight:500">Страна</th>
+                  <th style="padding:10px 8px;font-weight:500;text-align:right">Сумма</th><th style="padding:10px 8px;font-weight:500">Отгрузка</th>
+                  <th style="padding:10px 8px;font-weight:500">Проблема</th>
+                </tr></thead>
+                <tbody onClick="{{ onProbClick }}">
+                  <sc-for list="{{ probOrders }}" as="o" hint-placeholder-count="6">
+                    <tr data-order="{{ o.id }}" style="border-top:1px solid #EFEBE2;cursor:pointer">
+                      <td style="padding:11px 8px;font-family:'IBM Plex Mono';font-size:12px;color:#5C8A3F;font-weight:500">{{ o.id }}</td>
+                      <td style="padding:11px 8px;font-weight:500">{{ o.cl }}</td>
+                      <td style="padding:11px 8px;color:#6E685D">{{ o.mgr }}</td>
+                      <td style="padding:11px 8px;color:#6E685D">{{ o.ctry }}</td>
+                      <td style="padding:11px 8px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px">{{ o.sum }}</td>
+                      <td style="padding:11px 8px;font-family:'IBM Plex Mono';font-size:12px;color:#6E685D">{{ o.date }}</td>
+                      <td style="padding:11px 8px"><span style="font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:20px;background:{{ o.probBg }};color:{{ o.probColor }}">{{ o.prob }}</span></td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN -->
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <!-- TOP CLIENTS -->
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px">
+              <h2 style="margin:0 0 4px;font-size:15px;font-weight:600">Top clients</h2>
+              <div style="font-size:11.5px;color:#9C9586;margin-bottom:14px">Топ-10 = 47% выручки</div>
+              <div style="display:flex;flex-direction:column;gap:13px">
+                <sc-for list="{{ topClients }}" as="c" hint-placeholder-count="5">
+                  <div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px">
+                      <span style="font-weight:500">{{ c.n }}</span>
+                      <span style="font-family:'IBM Plex Mono';font-size:12px;color:#4A463C">{{ c.v }} · {{ c.pct }}</span>
+                    </div>
+                    <div style="height:6px;background:#F0ECE3;border-radius:4px;overflow:hidden"><div style="height:100%;width:{{ c.barW }};background:#7FA45C;border-radius:4px"></div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <!-- TOP MANAGERS -->
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px">
+              <h2 style="margin:0 0 14px;font-size:15px;font-weight:600">Top managers · каналы</h2>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <sc-for list="{{ topManagers }}" as="m" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid #F1EDE4">
+                    <div style="width:34px;height:34px;border-radius:9px;background:#F0ECE3;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono';font-size:12px;font-weight:600;color:#6E685D;flex:none">{{ m.orders }}</div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:13px;font-weight:600">{{ m.n }}</div>
+                      <div style="font-size:11px;color:#9C9586">{{ m.role }} · чек {{ m.chk }}</div>
+                    </div>
+                    <div style="text-align:right">
+                      <div style="font-family:'IBM Plex Mono';font-size:12.5px;font-weight:600">{{ m.v }}</div>
+                      <div style="font-size:10.5px;color:{{ m.payColor }}">оплата {{ m.pay }}%</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <!-- DATA ERRORS -->
+            <div onClick="{{ onFlagClick }}" data-to="dataquality" style="background:#2E2B25;border-radius:14px;padding:18px 20px;cursor:pointer">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+                <span class="ms" style="font-size:19px;color:#A6C97F">rule</span>
+                <h2 style="margin:0;font-size:15px;font-weight:600;color:#F4F1EA">Критичные ошибки данных</h2>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 16px">
+                <sc-for list="{{ dataErrors }}" as="e" hint-placeholder-count="4">
+                  <div>
+                    <div style="font-family:'IBM Plex Mono';font-size:22px;font-weight:600;color:{{ e.mc }};line-height:1">{{ e.v }}</div>
+                    <div style="font-size:11.5px;color:#CFC9BC;margin-top:4px;line-height:1.3">{{ e.t }}</div>
+                    <div style="font-size:10.5px;color:#857E6E">{{ e.base }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ КЛАДОВЩИК ============ -->
+      <sc-if value="{{ isWarehouse }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="display:flex;align-items:flex-end;gap:16px;margin-bottom:18px">
+          <div>
+            <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">ДИСПЕТЧЕР СКЛАДА · УПРАВЛЕНИЕ ПО ИСКЛЮЧЕНИЯМ</div>
+            <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Кладовщик</h1>
+            <div style="font-size:13.5px;color:#6E685D;margin-top:4px">Что собрать прямо сейчас — система знает срок сама, вы реагируете на исключения.</div>
+          </div>
+          <div style="flex:1"></div>
+          <!-- READINESS CALCULATOR -->
+          <div style="background:#2E2B25;border-radius:12px;padding:14px 18px;color:#EDE9E0;min-width:300px">
+            <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A6C97F;margin-bottom:8px">КАЛЬКУЛЯТОР СРОКА ГОТОВНОСТИ</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="text-align:center"><div style="font-family:'IBM Plex Mono';font-size:18px;font-weight:600">3</div><div style="font-size:10px;color:#8B8474">фасовщ.</div></div>
+              <span style="color:#6E685A">×</span>
+              <div style="text-align:center"><div style="font-family:'IBM Plex Mono';font-size:18px;font-weight:600">6 290</div><div style="font-size:10px;color:#8B8474">шт/смену</div></div>
+              <span style="color:#6E685A">=</span>
+              <div style="text-align:center"><div style="font-family:'IBM Plex Mono';font-size:18px;font-weight:600;color:#A6C97F">18 870</div><div style="font-size:10px;color:#8B8474">мощность</div></div>
+              <div style="width:1px;height:34px;background:rgba(255,255,255,.12);margin:0 4px"></div>
+              <div style="text-align:center"><div style="font-family:'IBM Plex Mono';font-size:18px;font-weight:600;color:#E8C97F">30.06</div><div style="font-size:10px;color:#8B8474">очередь готова</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATUS TABS -->
+        <div onClick="{{ onWhTab }}" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+          <sc-for list="{{ whTabs }}" as="t" hint-placeholder-count="8">
+            <div data-tab="{{ t.k }}" style="display:flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:500;background:{{ t.tbg }};color:{{ t.tcolor }};border:1px solid {{ t.tborder }}">
+              {{ t.label }}<span style="font-family:'IBM Plex Mono';font-size:11px;font-weight:600;padding:1px 6px;border-radius:20px;background:{{ t.tcbg }};color:{{ t.tccolor }}">{{ t.c }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- MAIN TABLE -->
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase;background:#FBFAF7">
+              <th style="padding:13px 16px;font-weight:500">Заказ</th><th style="padding:13px 12px;font-weight:500">Клиент</th>
+              <th style="padding:13px 12px;font-weight:500">Дата отгрузки</th><th style="padding:13px 12px;font-weight:500;text-align:center">Товар</th>
+              <th style="padding:13px 12px;font-weight:500;text-align:center">Упаковка</th><th style="padding:13px 12px;font-weight:500">Статус</th>
+              <th style="padding:13px 12px;font-weight:500">Что сделать</th><th style="padding:13px 16px;font-weight:500"></th>
+            </tr></thead>
+            <tbody onClick="{{ onWhRow }}">
+              <sc-for list="{{ whRows }}" as="o" hint-placeholder-count="6">
+                <tr data-order="{{ o.id }}" style="border-top:1px solid #EFEBE2;cursor:pointer">
+                  <td style="padding:14px 16px;font-family:'IBM Plex Mono';font-size:12px;color:#5C8A3F;font-weight:500">{{ o.id }}</td>
+                  <td style="padding:14px 12px;font-weight:600">{{ o.cl }}</td>
+                  <td style="padding:14px 12px;color:#5A5448;font-size:12.5px">{{ o.date }}</td>
+                  <td style="padding:14px 12px;text-align:center"><span class="ms" style="font-size:20px;color:{{ o.goodsColor }}">{{ o.goodsIcon }}</span></td>
+                  <td style="padding:14px 12px;text-align:center"><span class="ms" style="font-size:20px;color:{{ o.packColor }}">{{ o.packIcon }}</span></td>
+                  <td style="padding:14px 12px"><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ o.stBg }};color:{{ o.stColor }}">{{ o.stLabel }}</span></td>
+                  <td style="padding:14px 12px;color:#5A5448;font-size:12.5px">{{ o.todo }}</td>
+                  <td style="padding:14px 16px;text-align:right"><span class="ms" style="font-size:20px;color:#B4AD9C">chevron_right</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12.5px;color:#8C8576">
+          <span class="ms" style="font-size:17px;color:#7FA45C">lightbulb</span>
+          Сигналы: <span style="color:#5C8A3F;font-weight:600">зелёный</span> — обеспечено, <span style="color:#CC8A2C;font-weight:600">янтарный</span> — упаковка на грани, <span style="color:#C7503F;font-weight:600">красный</span> — нехватка товара. Кликните строку, чтобы открыть карточку заказа.
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ СНАБЖЕНИЕ ============ -->
+      <sc-if value="{{ isSupply }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="margin-bottom:18px">
+          <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">УПАКОВКА И МАТЕРИАЛЫ · ТОЧКИ ПЕРЕЗАКАЗА</div>
+          <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Снабжение</h1>
+          <div style="font-size:13.5px;color:#6E685D;margin-top:4px">Упаковка не должна кончиться в момент отгрузки — видим дефицит заранее.</div>
+        </div>
+
+        <!-- alert: что заказать сегодня -->
+        <div style="background:#FBE9E5;border:1px solid #F1C9C0;border-radius:14px;padding:16px 20px;margin-bottom:18px;display:flex;gap:14px;align-items:flex-start">
+          <span class="ms" style="font-size:24px;color:#C7503F">error</span>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:600;color:#9A3527">Что нужно заказать сегодня — 4 критичные позиции</div>
+            <div style="font-size:12.5px;color:#8A4538;margin-top:4px;line-height:1.45">Обечайки Микс PL (покрытие 0.6 мес, срок 50 дней) — <b>нужно ~38 000</b>. Ассорти на нуле. Вишня и Чёрная смородина — покрытие 0.5 мес. Стандарт делается 2 недели, флоупак — 40–50 дней: ждать нельзя.</div>
+          </div>
+          <button style="flex:none;align-self:center;height:38px;padding:0 16px;background:#C7503F;border:none;border-radius:9px;color:#fff;font-family:'IBM Plex Sans';font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap">Сформировать заявку</button>
+        </div>
+
+        <!-- KPI -->
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px">
+          <sc-for list="{{ supKpis }}" as="k" hint-placeholder-count="5">
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:12px;padding:14px 16px;position:relative;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:{{ k.accent }}"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">
+                <span style="font-size:11.5px;color:#7C7565;font-weight:500">{{ k.label }}</span>
+                <span class="ms" style="font-size:18px;color:{{ k.accent }}">{{ k.icon }}</span>
+              </div>
+              <div style="font-family:'IBM Plex Mono';font-size:26px;font-weight:600;line-height:1">{{ k.val }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- tabs -->
+        <div onClick="{{ onSupTab }}" style="display:flex;gap:8px;margin-bottom:16px">
+          <sc-for list="{{ supTabs }}" as="t" hint-placeholder-count="5">
+            <div data-tab="{{ t.k }}" style="height:34px;display:flex;align-items:center;padding:0 14px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:500;background:{{ t.tbg }};color:{{ t.tcolor }};border:1px solid {{ t.tborder }}">{{ t.l }}</div>
+          </sc-for>
+        </div>
+
+        <!-- table -->
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase;background:#FBFAF7">
+              <th style="padding:13px 16px;font-weight:500">Позиция</th><th style="padding:13px 10px;font-weight:500">Тип</th>
+              <th style="padding:13px 10px;font-weight:500;text-align:right">Остаток</th><th style="padding:13px 10px;font-weight:500;text-align:right">Расход/мес</th>
+              <th style="padding:13px 10px;font-weight:500;text-align:right">Покрытие</th><th style="padding:13px 10px;font-weight:500">Срок</th>
+              <th style="padding:13px 10px;font-weight:500;text-align:right">Точка заказа</th><th style="padding:13px 10px;font-weight:500;text-align:right">Заказать</th>
+              <th style="padding:13px 16px;font-weight:500">Статус</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ supRows }}" as="r" hint-placeholder-count="10">
+                <tr style="border-top:1px solid #EFEBE2">
+                  <td style="padding:13px 16px;font-weight:600">{{ r.pos }}</td>
+                  <td style="padding:13px 10px;color:#6E685D;font-size:12px">{{ r.type }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px">{{ r.rest }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px;color:#6E685D">{{ r.use }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:13px;font-weight:600;color:{{ r.covColor }}">{{ r.cov }} мес</td>
+                  <td style="padding:13px 10px;color:#6E685D;font-size:12px">{{ r.lead }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12px;color:#6E685D">{{ r.rop }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px;font-weight:600;color:{{ r.orderColor }}">{{ r.order }}</td>
+                  <td style="padding:13px 16px"><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ r.stBg }};color:{{ r.stColor }}">{{ r.stLabel }}</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ ПРОИЗВОДСТВО ============ -->
+      <sc-if value="{{ isProduction }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="margin-bottom:18px">
+          <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">ПЛАН ИЗ ОЧЕРЕДИ ЗАКАЗОВ · ФАКТ ПРОТИВ ПЛАНА</div>
+          <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Производство</h1>
+          <div style="font-size:13.5px;color:#6E685D;margin-top:4px">Что выпустить под заказы и под пополнение склада — план рождается из очереди.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px">
+          <sc-for list="{{ prodKpis }}" as="k" hint-placeholder-count="6">
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:12px;padding:13px 14px;position:relative;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:{{ k.accent }}"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <span style="font-size:11px;color:#7C7565;font-weight:500;line-height:1.2">{{ k.label }}</span>
+                <span class="ms" style="font-size:17px;color:{{ k.accent }}">{{ k.icon }}</span>
+              </div>
+              <div style="font-family:'IBM Plex Mono';font-size:22px;font-weight:600;line-height:1">{{ k.val }}</div>
+              <div style="font-size:10.5px;color:#9C9586;margin-top:5px">{{ k.sub }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start">
+          <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;overflow:hidden">
+            <div style="padding:16px 20px 12px;display:flex;align-items:center;gap:10px">
+              <h2 style="margin:0;font-size:16px;font-weight:600">План смены · SKU</h2>
+              <span style="font-family:'IBM Plex Mono';font-size:11px;color:#9C9586;background:#F4F1E9;padding:2px 8px;border-radius:20px">26.06 · ночная смена</span>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px">
+              <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase;background:#FBFAF7">
+                <th style="padding:11px 20px;font-weight:500">SKU · Название</th><th style="padding:11px 10px;font-weight:500;text-align:right">Под заказ</th>
+                <th style="padding:11px 10px;font-weight:500;text-align:right">Пополнение</th><th style="padding:11px 10px;font-weight:500">Приоритет</th>
+                <th style="padding:11px 10px;font-weight:500">Статус</th><th style="padding:11px 20px;font-weight:500">Готовность</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ prodRows }}" as="r" hint-placeholder-count="6">
+                  <tr style="border-top:1px solid #EFEBE2">
+                    <td style="padding:13px 20px;font-weight:600">{{ r.sku }}</td>
+                    <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px;font-weight:600">{{ r.ord }}</td>
+                    <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px;color:#6E685D">{{ r.rep }}</td>
+                    <td style="padding:13px 10px"><span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:{{ r.prioColor }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ r.prioColor }}"></span>{{ r.prio }}</span></td>
+                    <td style="padding:13px 10px"><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ r.stBg }};color:{{ r.stColor }}">{{ r.stLabel }}</span></td>
+                    <td style="padding:13px 20px;color:#5A5448;font-size:12.5px">{{ r.ready }}</td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px">
+              <h2 style="margin:0 0 4px;font-size:15px;font-weight:600">Загрузка цеха</h2>
+              <div style="font-size:11.5px;color:#9C9586;margin-bottom:16px">шт/день · рост ×4.5 за год</div>
+              <div style="display:flex;align-items:flex-end;gap:12px;height:150px">
+                <sc-for list="{{ shiftBars }}" as="b" hint-placeholder-count="6">
+                  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+                    <div style="font-family:'IBM Plex Mono';font-size:10px;color:#6E685D">{{ b.v }}</div>
+                    <div style="width:100%;border-radius:5px 5px 0 0;height:{{ b.barH }};background:{{ b.barColor }}"></div>
+                    <div style="font-size:9.5px;color:#9C9586">{{ b.m }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="background:#FAF0DC;border:1px solid #ECD6A8;border-radius:14px;padding:16px 18px">
+              <div style="display:flex;gap:9px;align-items:flex-start"><span class="ms" style="font-size:19px;color:#CC8A2C">notifications_active</span>
+                <div><div style="font-size:13px;font-weight:600;color:#8A5A12">Смена упаковки 35г Классика</div><div style="font-size:12px;color:#8A6A2E;margin-top:3px;line-height:1.4">Новая обечайка не доведена до цеха — риск использования старой версии и возвратов. Уведомить смену.</div></div>
+              </div>
+            </div>
+            <div style="background:#FBE9E5;border:1px solid #F1C9C0;border-radius:14px;padding:16px 18px">
+              <div style="display:flex;gap:9px;align-items:flex-start"><span class="ms" style="font-size:19px;color:#C7503F">trending_down</span>
+                <div><div style="font-size:13px;font-weight:600;color:#9A3527">Отклонение от плана −21%</div><div style="font-size:12px;color:#8A4538;margin-top:3px;line-height:1.4">Факт 6 240 из 7 900 шт на 14:00. Дефицит под заказ Корица 35г — 800 шт. Предложить переброс с формовки.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ ЛОГИСТИКА ============ -->
+      <sc-if value="{{ isLogistics }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="margin-bottom:18px">
+          <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">ТРАНСПОРТ ПОД ГОТОВЫЙ ЗАКАЗ · КОНСОЛИДАЦИЯ</div>
+          <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Логистика</h1>
+          <div style="font-size:13.5px;color:#6E685D;margin-top:4px">Что и когда реально отгружать — бронь транспорта под расчётный срок готовности.</div>
+        </div>
+        <div style="background:#FBE9E5;border:1px solid #F1C9C0;border-radius:14px;padding:14px 20px;margin-bottom:18px;display:flex;gap:13px;align-items:center">
+          <span class="ms" style="font-size:22px;color:#C7503F">local_fire_department</span>
+          <div style="flex:1"><span style="font-size:14px;font-weight:600;color:#9A3527">Что горит сегодня:</span> <span style="font-size:13px;color:#8A4538">3 заказа готовы, транспорт не назначен — Beryozka (Болгария), Leis GmbH (Германия). Риск штрафа за срыв.</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px">
+          <sc-for list="{{ logKpis }}" as="k" hint-placeholder-count="5">
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:12px;padding:14px 16px;position:relative;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:{{ k.accent }}"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px"><span style="font-size:11.5px;color:#7C7565;font-weight:500">{{ k.label }}</span><span class="ms" style="font-size:18px;color:{{ k.accent }}">{{ k.icon }}</span></div>
+              <div style="font-family:'IBM Plex Mono';font-size:26px;font-weight:600;line-height:1">{{ k.val }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start">
+          <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;overflow:hidden">
+            <table style="width:100%;border-collapse:collapse;font-size:13px">
+              <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase;background:#FBFAF7">
+                <th style="padding:13px 18px;font-weight:500">Заказ</th><th style="padding:13px 10px;font-weight:500">Клиент</th>
+                <th style="padding:13px 10px;font-weight:500">Направление</th><th style="padding:13px 10px;font-weight:500">Отгрузка</th>
+                <th style="padding:13px 10px;font-weight:500;text-align:center">Готов</th><th style="padding:13px 10px;font-weight:500;text-align:center">Док-ты</th>
+                <th style="padding:13px 18px;font-weight:500">Транспорт</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ logRows }}" as="r" hint-placeholder-count="6">
+                  <tr style="border-top:1px solid #EFEBE2">
+                    <td style="padding:13px 18px;font-family:'IBM Plex Mono';font-size:12px;color:#5C8A3F;font-weight:500">{{ r.id }}</td>
+                    <td style="padding:13px 10px;font-weight:600">{{ r.cl }}</td>
+                    <td style="padding:13px 10px;color:#5A5448">{{ r.dir }}</td>
+                    <td style="padding:13px 10px;font-family:'IBM Plex Mono';font-size:12px;color:#6E685D">{{ r.date }}</td>
+                    <td style="padding:13px 10px;text-align:center"><span class="ms" style="font-size:19px;color:{{ r.readyC }}">{{ r.readyIc }}</span></td>
+                    <td style="padding:13px 10px;text-align:center"><span class="ms" style="font-size:19px;color:{{ r.docsC }}">{{ r.docsIc }}</span></td>
+                    <td style="padding:13px 18px;font-size:12.5px;font-weight:500;color:{{ r.trColor }}">{{ r.transport }}</td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px">
+              <h2 style="margin:0 0 4px;font-size:15px;font-weight:600">Направления отгрузок</h2>
+              <div style="font-size:11.5px;color:#9C9586;margin-bottom:14px">Топ-3 = 76% объёма</div>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <sc-for list="{{ logDirs }}" as="d" hint-placeholder-count="6">
+                  <div><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span style="font-weight:500">{{ d.n }}</span><span style="font-family:'IBM Plex Mono';font-size:12px;color:#6E685D">{{ d.pct }}%</span></div>
+                    <div style="height:6px;background:#F0ECE3;border-radius:4px;overflow:hidden"><div style="height:100%;width:{{ d.w }};background:{{ d.c }};border-radius:4px"></div></div></div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="background:#E7EEF2;border:1px solid #C9DAE2;border-radius:14px;padding:16px 18px">
+              <div style="display:flex;gap:9px;align-items:flex-start"><span class="ms" style="font-size:19px;color:#3C5563">hub</span>
+                <div><div style="font-size:13px;font-weight:600;color:#3C5563">Консолидация: Германия</div><div style="font-size:12px;color:#4E6675;margin-top:3px;line-height:1.4">Langino и Leis GmbH — одно направление, 28.06. Объединить в один рейс: экономия пустого пробега.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ ОПЛАТЫ ============ -->
+      <sc-if value="{{ isPayments }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="margin-bottom:18px">
+          <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">КОНТУР ДЕБИТОРКИ · СТАРЕНИЕ ПО СЕГМЕНТАМ</div>
+          <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Оплаты и дебиторка</h1>
+          <div style="font-size:13.5px;color:#6E685D;margin-top:4px">Вернуть в управление €202k: кто, сколько и сколько дней — плюс авто-напоминания.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px">
+          <sc-for list="{{ payKpis }}" as="k" hint-placeholder-count="5">
+            <div style="background:#fff;border:1px solid #E4DFD4;border-radius:12px;padding:14px 16px;position:relative;overflow:hidden">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:{{ k.accent }}"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px"><span style="font-size:11.5px;color:#7C7565;font-weight:500">{{ k.label }}</span><span class="ms" style="font-size:18px;color:{{ k.accent }}">{{ k.icon }}</span></div>
+              <div style="font-family:'IBM Plex Mono';font-size:23px;font-weight:600;line-height:1">{{ k.val }}</div>
+              <div style="font-size:10.5px;color:#9C9586;margin-top:6px">{{ k.sub }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;overflow:hidden">
+          <div style="padding:16px 20px 12px;display:flex;align-items:center;gap:10px"><h2 style="margin:0;font-size:16px;font-weight:600">Зависшая дебиторка по клиентам</h2><div style="flex:1"></div><span style="font-size:12.5px;color:#5C8A3F;font-weight:600;cursor:pointer">Отправить напоминания →</span></div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase;background:#FBFAF7">
+              <th style="padding:12px 20px;font-weight:500">Клиент</th><th style="padding:12px 10px;font-weight:500">Канал</th>
+              <th style="padding:12px 10px;font-weight:500;text-align:right">Сумма</th><th style="padding:12px 10px;font-weight:500">Последний заказ</th>
+              <th style="padding:12px 10px;font-weight:500;text-align:right">Возраст</th><th style="padding:12px 10px;font-weight:500">Сегмент</th>
+              <th style="padding:12px 20px;font-weight:500;text-align:right">Действие</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ payRows }}" as="r" hint-placeholder-count="6">
+                <tr style="border-top:1px solid #EFEBE2">
+                  <td style="padding:13px 20px;font-weight:600">{{ r.cl }}</td>
+                  <td style="padding:13px 10px;color:#6E685D">{{ r.ch }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:13px;font-weight:600">{{ r.sum }}</td>
+                  <td style="padding:13px 10px;font-family:'IBM Plex Mono';font-size:12px;color:#6E685D">{{ r.last }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:13px;font-weight:600;color:{{ r.daysColor }}">{{ r.days }} дн</td>
+                  <td style="padding:13px 10px"><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ r.segBg }};color:{{ r.segColor }}">{{ r.segLabel }}</span></td>
+                  <td style="padding:13px 20px;text-align:right"><span class="ms" style="font-size:19px;color:#7FA45C;cursor:pointer">mail</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ DATA QUALITY ============ -->
+      <sc-if value="{{ isDataQuality }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="margin-bottom:18px">
+          <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">ХРАНИТЕЛЬ ИИ · ФУНДАМЕНТ АВТОМАТИЗАЦИИ</div>
+          <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Data Quality</h1>
+          <div style="font-size:13.5px;color:#6E685D;margin-top:4px">Без достоверных данных остальные дашборды врут — чиним сверху вниз по критичности.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:18px">
+          <sc-for list="{{ dqKpis }}" as="k" hint-placeholder-count="7">
+            <div style="background:#2E2B25;border-radius:12px;padding:13px 13px">
+              <div style="font-family:'IBM Plex Mono';font-size:22px;font-weight:600;color:{{ k.mc }};line-height:1">{{ k.val }}</div>
+              <div style="font-size:10.5px;color:#CFC9BC;margin-top:7px;line-height:1.3">{{ k.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;overflow:hidden">
+          <div style="padding:16px 20px 12px;display:flex;align-items:center;gap:10px"><h2 style="margin:0;font-size:16px;font-weight:600">Очередь исправлений</h2><span style="font-family:'IBM Plex Mono';font-size:11px;color:#9C9586;background:#F4F1E9;padding:2px 8px;border-radius:20px">по приоритету критичности</span></div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase;background:#FBFAF7">
+              <th style="padding:12px 20px;font-weight:500">Тип ошибки</th><th style="padding:12px 10px;font-weight:500">Сущность</th>
+              <th style="padding:12px 10px;font-weight:500">Описание</th><th style="padding:12px 10px;font-weight:500">Критичность</th>
+              <th style="padding:12px 10px;font-weight:500">Ответственный</th><th style="padding:12px 20px;font-weight:500">Статус</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ dqRows }}" as="r" hint-placeholder-count="7">
+                <tr style="border-top:1px solid #EFEBE2">
+                  <td style="padding:13px 20px;font-weight:600;white-space:nowrap">{{ r.type }}</td>
+                  <td style="padding:13px 10px;font-family:'IBM Plex Mono';font-size:12px;color:#5A5448;white-space:nowrap">{{ r.ent }}</td>
+                  <td style="padding:13px 10px;color:#6E685D;font-size:12px;max-width:340px">{{ r.desc }}</td>
+                  <td style="padding:13px 10px"><span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:{{ r.critColor }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ r.critColor }}"></span>{{ r.crit }}</span></td>
+                  <td style="padding:13px 10px;color:#5A5448;font-size:12.5px">{{ r.who }}</td>
+                  <td style="padding:13px 20px"><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ r.stBg }};color:{{ r.stColor }}">{{ r.stLabel }}</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ ЗАКАЗЫ ============ -->
+      <sc-if value="{{ isOrders }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="display:flex;align-items:flex-end;gap:16px;margin-bottom:18px">
+          <div>
+            <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">ЕДИНЫЙ РЕЕСТР · ВСЕ КАНАЛЫ В ОДНОЙ ТОЧКЕ</div>
+            <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Заказы</h1>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;gap:8px">
+            <div style="display:flex;align-items:center;gap:6px;height:34px;padding:0 11px;background:#fff;border:1px solid #E1DBCE;border-radius:8px;font-size:12.5px;color:#5A5448"><span class="ms" style="font-size:17px;color:#A79F8E">filter_list</span>Фильтры</div>
+            <div style="display:flex;align-items:center;gap:6px;height:34px;padding:0 11px;background:#fff;border:1px solid #E1DBCE;border-radius:8px;font-size:12.5px;color:#5A5448">Статус: Все<span class="ms" style="font-size:17px;color:#A79F8E">expand_more</span></div>
+            <div style="display:flex;align-items:center;gap:6px;height:34px;padding:0 11px;background:#fff;border:1px solid #E1DBCE;border-radius:8px;font-size:12.5px;color:#5A5448">Оплата: Все<span class="ms" style="font-size:17px;color:#A79F8E">expand_more</span></div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase;background:#FBFAF7">
+              <th style="padding:13px 18px;font-weight:500">Заказ</th><th style="padding:13px 10px;font-weight:500">Клиент</th>
+              <th style="padding:13px 10px;font-weight:500">Менеджер</th><th style="padding:13px 10px;font-weight:500">Страна</th>
+              <th style="padding:13px 10px;font-weight:500">Отгрузка</th><th style="padding:13px 10px;font-weight:500;text-align:right">Сумма</th>
+              <th style="padding:13px 10px;font-weight:500">Статус</th><th style="padding:13px 18px;font-weight:500">Оплата</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ ordRows }}" as="r" hint-placeholder-count="9">
+                <tr style="border-top:1px solid #EFEBE2">
+                  <td style="padding:13px 18px;font-family:'IBM Plex Mono';font-size:12px;color:#5C8A3F;font-weight:500">{{ r.id }}</td>
+                  <td style="padding:13px 10px;font-weight:600">{{ r.cl }}</td>
+                  <td style="padding:13px 10px;color:#6E685D">{{ r.mgr }}</td>
+                  <td style="padding:13px 10px;color:#6E685D">{{ r.ctry }}</td>
+                  <td style="padding:13px 10px;font-family:'IBM Plex Mono';font-size:12px;color:#6E685D">{{ r.date }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px;font-weight:600">{{ r.sum }}</td>
+                  <td style="padding:13px 10px"><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ r.stBg }};color:{{ r.stColor }}">{{ r.stLabel }}</span></td>
+                  <td style="padding:13px 18px"><span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:{{ r.payColor }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ r.payColor }}"></span>{{ r.payLabel }}</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ КЛИЕНТЫ ============ -->
+      <sc-if value="{{ isClients }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="margin-bottom:18px">
+          <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">КАНОНИЧЕСКИЙ СПРАВОЧНИК · КОНЕЦ ДУБЛЯМ</div>
+          <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Клиенты</h1>
+          <div style="font-size:13.5px;color:#6E685D;margin-top:4px">Один клиент — одна карточка. 17 групп дублей слиты, 43 «клиента-числа» нормализованы.</div>
+        </div>
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase;background:#FBFAF7">
+              <th style="padding:13px 18px;font-weight:500">Каноническое имя</th><th style="padding:13px 10px;font-weight:500;text-align:right">Заказов</th>
+              <th style="padding:13px 10px;font-weight:500;text-align:right">Выручка</th><th style="padding:13px 10px;font-weight:500">Канал</th>
+              <th style="padding:13px 18px;font-weight:500">Состояние справочника</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ cliRows }}" as="r" hint-placeholder-count="7">
+                <tr style="border-top:1px solid #EFEBE2">
+                  <td style="padding:13px 18px;font-weight:600">{{ r.n }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px">{{ r.ord }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px;font-weight:600">{{ r.rev }}</td>
+                  <td style="padding:13px 10px;color:#6E685D">{{ r.ch }}</td>
+                  <td style="padding:13px 18px"><span style="display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;padding:3px 11px;border-radius:20px;background:{{ r.dupBg }};color:{{ r.dupColor }}"><span class="ms" style="font-size:15px">{{ r.dupIcon }}</span>{{ r.dup }}</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ SKU ============ -->
+      <sc-if value="{{ isSku }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="margin-bottom:18px">
+          <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">КАРТОЧКА ПРОДУКТА · ВЕРСИЯ УПАКОВКИ · ОСТАТОК</div>
+          <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">SKU / Номенклатура</h1>
+          <div style="font-size:13.5px;color:#6E685D;margin-top:4px">Один объект на SKU: штук в коробке, актуальная упаковка, переводы — убирает возвраты по старой упаковке.</div>
+        </div>
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="text-align:left;color:#9C9586;font-size:11px;letter-spacing:.4px;text-transform:uppercase;background:#FBFAF7">
+              <th style="padding:13px 18px;font-weight:500">SKU</th><th style="padding:13px 10px;font-weight:500">Линейка</th>
+              <th style="padding:13px 10px;font-weight:500">Вкус</th><th style="padding:13px 10px;font-weight:500;text-align:right">Отгружено всего</th>
+              <th style="padding:13px 10px;font-weight:500;text-align:right">Остаток</th><th style="padding:13px 10px;font-weight:500">Упаковка</th>
+              <th style="padding:13px 18px;font-weight:500">Версия</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ skuRows }}" as="r" hint-placeholder-count="6">
+                <tr style="border-top:1px solid #EFEBE2">
+                  <td style="padding:13px 18px;font-weight:600">{{ r.sku }}</td>
+                  <td style="padding:13px 10px;color:#6E685D">{{ r.line }}</td>
+                  <td style="padding:13px 10px;color:#6E685D">{{ r.fl }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12px;color:#6E685D">{{ r.ship }}</td>
+                  <td style="padding:13px 10px;text-align:right;font-family:'IBM Plex Mono';font-size:12.5px;font-weight:600">{{ r.stock }}</td>
+                  <td style="padding:13px 10px;color:#5A5448">{{ r.pack }}</td>
+                  <td style="padding:13px 18px"><span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ r.verBg }};color:{{ r.verColor }}">{{ r.ver }}</span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ НАСТРОЙКИ ============ -->
+      <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="margin-bottom:18px">
+          <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">РОЛИ · ИСТОЧНИКИ · ПЕРИОД ДОВЕРИЯ</div>
+          <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Настройки</h1>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px">
+            <h2 style="margin:0 0 14px;font-size:15px;font-weight:600">Роли и доступы</h2>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <div style="display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid #F1EDE4"><div style="width:30px;height:30px;border-radius:8px;background:#FBE9E5;color:#C7503F;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">ГЛ</div><div style="flex:1"><div style="font-size:13px;font-weight:600">Глеб</div><div style="font-size:11px;color:#9C9586">Управляющий · полный доступ</div></div><span class="ms" style="font-size:20px;color:#5C8A3F">toggle_on</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid #F1EDE4"><div style="width:30px;height:30px;border-radius:8px;background:#E7EEF2;color:#3C5563;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">МХ</div><div style="flex:1"><div style="font-size:13px;font-weight:600">Михаил</div><div style="font-size:11px;color:#9C9586">Кладовщик · склад, логистика</div></div><span class="ms" style="font-size:20px;color:#5C8A3F">toggle_on</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid #F1EDE4"><div style="width:30px;height:30px;border-radius:8px;background:#EAF1E1;color:#3E6B2C;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">ВЛ</div><div style="flex:1"><div style="font-size:13px;font-weight:600">Владислав</div><div style="font-size:11px;color:#9C9586">Производство · выпуск, план</div></div><span class="ms" style="font-size:20px;color:#5C8A3F">toggle_on</span></div>
+              <div style="display:flex;align-items:center;gap:11px"><div style="width:30px;height:30px;border-radius:8px;background:#FAF0DC;color:#8A5A12;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600">ЖН</div><div style="flex:1"><div style="font-size:13px;font-weight:600">Жанна</div><div style="font-size:11px;color:#9C9586">Продажи ЕС · свои клиенты</div></div><span class="ms" style="font-size:20px;color:#5C8A3F">toggle_on</span></div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px">
+            <h2 style="margin:0 0 14px;font-size:15px;font-weight:600">Источники данных (MCP)</h2>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <div style="display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid #F1EDE4"><span class="ms" style="font-size:20px;color:#5C8A3F">database</span><div style="flex:1"><div style="font-size:13px;font-weight:600">1С — деньги и продажи</div><div style="font-size:11px;color:#9C9586">источник истины · этап 1</div></div><span style="font-size:11px;font-weight:600;color:#3E6B2C;background:#EAF1E1;padding:2px 9px;border-radius:20px">подключено</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid #F1EDE4"><span class="ms" style="font-size:20px;color:#5C8A3F">table_chart</span><div style="flex:1"><div style="font-size:13px;font-weight:600">SEMERS Group — выпуск</div><div style="font-size:11px;color:#9C9586">Владислав · конец смены</div></div><span style="font-size:11px;font-weight:600;color:#3E6B2C;background:#EAF1E1;padding:2px 9px;border-radius:20px">подключено</span></div>
+              <div style="display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid #F1EDE4"><span class="ms" style="font-size:20px;color:#CC8A2C">mail</span><div style="flex:1"><div style="font-size:13px;font-weight:600">Корпоративная почта</div><div style="font-size:11px;color:#9C9586">входящие заказы</div></div><span style="font-size:11px;font-weight:600;color:#8A5A12;background:#FAF0DC;padding:2px 9px;border-radius:20px">настройка</span></div>
+              <div style="display:flex;align-items:center;gap:11px"><span class="ms" style="font-size:20px;color:#5C8A3F">inventory_2</span><div style="flex:1"><div style="font-size:13px;font-weight:600">Остатки упаковки Рига</div><div style="font-size:11px;color:#9C9586">учёт посуточно</div></div><span style="font-size:11px;font-weight:600;color:#3E6B2C;background:#EAF1E1;padding:2px 9px;border-radius:20px">подключено</span></div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:18px 20px;grid-column:span 2">
+            <h2 style="margin:0 0 6px;font-size:15px;font-weight:600">Период доверия и нормативы</h2>
+            <div style="font-size:12px;color:#9C9586;margin-bottom:16px">Временные страховки на время калибровки расчёта — снимаются, когда система доказала точность.</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+              <div style="border:1px solid #EFEBE2;border-radius:10px;padding:14px"><div style="font-size:12px;color:#7C7565;margin-bottom:6px">Отметка «собрано»</div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;font-weight:600">Включена</span><span class="ms" style="font-size:22px;color:#5C8A3F">toggle_on</span></div></div>
+              <div style="border:1px solid #EFEBE2;border-radius:10px;padding:14px"><div style="font-size:12px;color:#7C7565;margin-bottom:6px">Недельная сверка</div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:14px;font-weight:600">Пятница</span><span class="ms" style="font-size:18px;color:#A79F8E">expand_more</span></div></div>
+              <div style="border:1px solid #EFEBE2;border-radius:10px;padding:14px"><div style="font-size:12px;color:#7C7565;margin-bottom:6px">Норматив фасовщика</div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:'IBM Plex Mono';font-size:14px;font-weight:600">6 290 шт/смену</span><span class="ms" style="font-size:18px;color:#A79F8E">edit</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ DESIGN SYSTEM / UI KIT ============ -->
+      <sc-if value="{{ isUikit }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div style="margin-bottom:22px">
+          <div style="font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.4px;color:#A79F8E;margin-bottom:5px">КОМПОНЕНТНАЯ СИСТЕМА · ОДИН ЯЗЫК НА ВСЕ ЭКРАНЫ</div>
+          <h1 style="margin:0;font-size:25px;font-weight:600;letter-spacing:-.3px">Design System</h1>
+          <div style="font-size:13.5px;color:#6E685D;margin-top:4px">IBM Plex Sans + Mono · тёплая палитра · светлый фон · смысловые цвета статусов.</div>
+        </div>
+
+        <!-- palette -->
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:20px;margin-bottom:18px">
+          <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E;margin-bottom:14px">ПАЛИТРА И СМЫСЛ ЦВЕТА</div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px">
+            <sc-for list="{{ palette }}" as="p" hint-placeholder-count="6">
+              <div><div style="height:56px;border-radius:10px;background:{{ p.c }};border:1px solid rgba(0,0,0,.05)"></div><div style="font-size:12px;font-weight:600;margin-top:8px">{{ p.n }}</div><div style="font-size:10.5px;color:#9C9586">{{ p.r }}</div></div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <!-- buttons -->
+          <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:20px">
+            <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E;margin-bottom:14px">КНОПКИ</div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+              <button style="height:38px;padding:0 16px;border-radius:9px;border:none;background:#5C8A3F;color:#fff;font-family:'IBM Plex Sans';font-size:13px;font-weight:600">Primary</button>
+              <button style="height:38px;padding:0 16px;border-radius:9px;border:1px solid #E1DBCE;background:#fff;color:#5A5448;font-family:'IBM Plex Sans';font-size:13px;font-weight:600">Secondary</button>
+              <button style="height:38px;padding:0 16px;border-radius:9px;border:none;background:transparent;color:#5C8A3F;font-family:'IBM Plex Sans';font-size:13px;font-weight:600">Ghost</button>
+              <button style="height:38px;padding:0 16px;border-radius:9px;border:none;background:#C7503F;color:#fff;font-family:'IBM Plex Sans';font-size:13px;font-weight:600">Destructive</button>
+            </div>
+          </div>
+          <!-- status pills + tags -->
+          <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:20px">
+            <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E;margin-bottom:14px">STATUS PILLS · TAGS</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <span style="font-size:11.5px;font-weight:600;padding:3px 11px;border-radius:20px;background:#EAF1E1;color:#3E6B2C">Норма</span>
+              <span style="font-size:11.5px;font-weight:600;padding:3px 11px;border-radius:20px;background:#FAF0DC;color:#8A5A12">Внимание</span>
+              <span style="font-size:11.5px;font-weight:600;padding:3px 11px;border-radius:20px;background:#FBE9E5;color:#9A3527">Критично</span>
+              <span style="font-size:11.5px;font-weight:600;padding:3px 11px;border-radius:20px;background:#E7EEF2;color:#3C5563">В работе</span>
+              <span style="font-size:11.5px;font-weight:500;padding:3px 11px;border-radius:6px;background:#F0ECE3;color:#6E685D">35 г</span>
+              <span style="font-size:11.5px;font-weight:500;padding:3px 11px;border-radius:6px;background:#F0ECE3;color:#6E685D">Флоупак</span>
+            </div>
+          </div>
+          <!-- inputs -->
+          <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:20px">
+            <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E;margin-bottom:14px">ПОЛЯ ВВОДА · DROPDOWN · ВАЛИДАЦИЯ</div>
+            <div style="display:flex;flex-direction:column;gap:11px">
+              <div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;padding:0 11px;font-size:13px;color:#9C9586">Текстовое поле</div>
+              <div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 11px;font-size:13px"><span>Dropdown</span><span class="ms" style="font-size:18px;color:#A79F8E">expand_more</span></div>
+              <div><div style="height:38px;border:1.5px solid #C7503F;border-radius:8px;background:#fff;display:flex;align-items:center;padding:0 11px;font-size:13px;color:#9C9586">Поле с ошибкой</div><div style="display:flex;align-items:center;gap:4px;margin-top:4px;font-size:11px;color:#C7503F"><span class="ms" style="font-size:14px">error</span>Обязательное поле</div></div>
+            </div>
+          </div>
+          <!-- alert + empty -->
+          <div style="background:#fff;border:1px solid #E4DFD4;border-radius:14px;padding:20px">
+            <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E;margin-bottom:14px">ALERT BLOCKS · EMPTY STATE</div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:11px 13px;background:#FBE9E5;border-radius:10px;margin-bottom:10px"><span class="ms" style="font-size:18px;color:#C7503F">error</span><span style="font-size:12.5px;color:#9A3527;font-weight:500">Критичный алерт — требует действия сегодня</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;border:1px dashed #D9D2C4;border-radius:10px;text-align:center"><span class="ms" style="font-size:28px;color:#C3BCAC">inbox</span><div style="font-size:12.5px;color:#9C9586;margin-top:6px">Нет данных по фильтру</div></div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- other screens injected below -->
+      {{ screenStub }}
+    </div>
+  </main>
+
+  <!-- ============ ORDER DRAWER ============ -->
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:40;display:flex;justify-content:flex-end">
+    <div onClick="{{ closeDrawer }}" style="position:absolute;inset:0;background:rgba(30,28,24,.34);animation:scl-overlay .2s ease both"></div>
+    <div style="position:relative;width:430px;height:100%;background:#FBFAF7;box-shadow:-8px 0 30px rgba(0,0,0,.16);display:flex;flex-direction:column;animation:scl-drawer .26s cubic-bezier(.22,.61,.36,1) both">
+      <!-- head -->
+      <div style="padding:20px 22px;border-bottom:1px solid #E4DFD4;background:#fff">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-family:'IBM Plex Mono';font-size:13px;color:#5C8A3F;font-weight:600">{{ dOrder.id }}</span>
+          <span style="font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:{{ dStBg }};color:{{ dStColor }}">{{ dStLabel }}</span>
+          <div style="flex:1"></div>
+          <span class="ms" onClick="{{ closeDrawer }}" style="font-size:22px;color:#9C9586;cursor:pointer">close</span>
+        </div>
+        <h2 style="margin:10px 0 2px;font-size:19px;font-weight:600">{{ dOrder.cl }}</h2>
+        <div style="font-size:12.5px;color:#8C8576">Отгрузка {{ dOrder.date }} · готовность {{ dReady }}</div>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;padding:18px 22px">
+        <!-- hint -->
+        <div style="display:flex;gap:10px;align-items:center;padding:11px 14px;border-radius:10px;background:{{ dHintBg }};margin-bottom:18px">
+          <span class="ms" style="font-size:19px;color:{{ dHintColor }}">insights</span>
+          <span style="font-size:12.5px;font-weight:600;color:{{ dHintColor }}">{{ dHint }}</span>
+        </div>
+
+        <!-- composition -->
+        <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E;margin-bottom:10px">СОСТАВ ЗАКАЗА · ХВАТАЕТ ЛИ ТОВАРА</div>
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:12px;overflow:hidden;margin-bottom:18px">
+          <sc-for list="{{ dComp }}" as="c" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid #F1EDE4">
+              <span class="ms" style="font-size:19px;color:{{ c.mc }}">{{ c.mark }}</span>
+              <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500">{{ c.sku }}</div><div style="font-size:11px;color:#9C9586">остаток {{ c.stock }} шт {{ c.lack }}</div></div>
+              <span style="font-family:'IBM Plex Mono';font-size:13px;font-weight:600">{{ c.qty }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- packaging -->
+        <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E;margin-bottom:10px">ХВАТАЕТ ЛИ УПАКОВКИ</div>
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:12px;overflow:hidden;margin-bottom:18px">
+          <sc-for list="{{ dPacks }}" as="p" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid #F1EDE4">
+              <span class="ms" style="font-size:19px;color:{{ p.mc }}">{{ p.mark }}</span>
+              <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500">{{ p.n }}</div><div style="font-size:11px;color:#9C9586">остаток {{ p.stock }}</div></div>
+              <span style="font-family:'IBM Plex Mono';font-size:13px;font-weight:600">нужно {{ p.need }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <!-- comments -->
+        <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E;margin-bottom:10px">КОММЕНТАРИИ</div>
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:12px;padding:14px;font-size:12.5px;color:#5A5448;line-height:1.5">{{ dNote }}</div>
+      </div>
+
+      <!-- actions -->
+      <div style="padding:14px 22px;border-top:1px solid #E4DFD4;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:9px">
+        <button style="height:40px;border-radius:9px;border:none;background:#5C8A3F;color:#fff;font-family:'IBM Plex Sans';font-size:13px;font-weight:600;cursor:pointer">Готов к сборке</button>
+        <button style="height:40px;border-radius:9px;border:1px solid #E1DBCE;background:#fff;color:#9A3527;font-family:'IBM Plex Sans';font-size:13px;font-weight:600;cursor:pointer">Не хватает товара</button>
+        <button style="height:40px;border-radius:9px;border:1px solid #E1DBCE;background:#fff;color:#8A5A12;font-family:'IBM Plex Sans';font-size:13px;font-weight:600;cursor:pointer">Не хватает упаковки</button>
+        <button style="height:40px;border-radius:9px;border:1px solid #E1DBCE;background:#fff;color:#5A5448;font-family:'IBM Plex Sans';font-size:13px;font-weight:600;cursor:pointer">Проблема</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============ ORDER FORM MODAL ============ -->
+  <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto">
+    <div onClick="{{ closeForm }}" style="position:fixed;inset:0;background:rgba(30,28,24,.42);animation:scl-overlay .2s ease both"></div>
+    <div style="position:relative;width:100%;max-width:1000px;background:#F7F5F0;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.28);overflow:hidden">
+      <!-- header -->
+      <div style="padding:20px 26px;background:#fff;border-bottom:1px solid #E4DFD4;display:flex;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;border-radius:9px;background:#EAF1E1;display:flex;align-items:center;justify-content:center"><span class="ms" style="font-size:20px;color:#5C8A3F">add_shopping_cart</span></div>
+        <div><h2 style="margin:0;font-size:18px;font-weight:600">Приём заказа</h2><div style="font-size:12px;color:#9C9586">Единая точка входа — чистые данные с первого касания</div></div>
+        <span style="font-family:'IBM Plex Mono';font-size:11px;font-weight:600;color:#8A5A12;background:#FAF0DC;padding:3px 10px;border-radius:20px">ЧЕРНОВИК</span>
+        <div style="flex:1"></div>
+        <span class="ms" onClick="{{ closeForm }}" style="font-size:24px;color:#9C9586;cursor:pointer">close</span>
+      </div>
+
+      <div style="padding:24px 26px;max-height:calc(100vh - 220px);overflow-y:auto">
+        <!-- параметры -->
+        <div style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E;margin-bottom:14px">ПАРАМЕТРЫ ЗАКАЗА</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px 16px;margin-bottom:8px">
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Order ID</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#F0ECE3;display:flex;align-items:center;padding:0 11px;font-family:'IBM Plex Mono';font-size:13px;color:#6E685D">2026-0001</div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Клиент <span style="color:#C7503F">*</span></label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 11px;font-size:13px"><span>futurus food</span><span class="ms" style="font-size:18px;color:#A79F8E">expand_more</span></div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Менеджер <span style="color:#C7503F">*</span></label><div style="height:38px;border:1.5px solid #C7503F;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 11px;font-size:13px;color:#9C9586"><span>Не выбран</span><span class="ms" style="font-size:18px;color:#C7503F">expand_more</span></div><div style="display:flex;align-items:center;gap:4px;margin-top:4px;font-size:11px;color:#C7503F"><span class="ms" style="font-size:14px">error</span>Обязательное поле — назначьте владельца</div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Канал заказа</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 11px;font-size:13px"><span>Почта</span><span class="ms" style="font-size:18px;color:#A79F8E">expand_more</span></div></div>
+
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Страна / рынок</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 11px;font-size:13px"><span>Латвия</span><span class="ms" style="font-size:18px;color:#A79F8E">expand_more</span></div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Дата приёма</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 11px;font-size:13px"><span>26.06.2026</span><span class="ms" style="font-size:17px;color:#A79F8E">calendar_today</span></div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Плановая отгрузка <span style="color:#C7503F">*</span></label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 11px;font-size:13px"><span>28.06.2026</span><span class="ms" style="font-size:17px;color:#A79F8E">calendar_today</span></div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Факт. отгрузка</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;padding:0 11px;font-size:13px;color:#9C9586">—</div></div>
+
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Сумма инвойса</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;padding:0 11px;font-family:'IBM Plex Mono';font-size:13px">4 280.00</div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Валюта</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 11px;font-size:13px"><span>EUR</span><span class="ms" style="font-size:18px;color:#A79F8E">expand_more</span></div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Статус заказа</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;gap:7px;padding:0 11px;font-size:13px"><span style="width:8px;height:8px;border-radius:50%;background:#5E7A8C"></span>Принят</div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Статус оплаты</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;gap:7px;padding:0 11px;font-size:13px"><span style="width:8px;height:8px;border-radius:50%;background:#CC8A2C"></span>Не оплачен</div></div>
+
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Дата оплаты</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;padding:0 11px;font-size:13px;color:#9C9586">—</div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Тип проблемы</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 11px;font-size:13px"><span>Нехватка товара</span><span class="ms" style="font-size:18px;color:#A79F8E">expand_more</span></div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Ответств. за склад</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;padding:0 11px;font-size:13px">Михаил</div></div>
+          <div><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Ответств. за упаковку</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;padding:0 11px;font-size:13px">Владислав</div></div>
+
+          <div style="grid-column:span 2"><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Ссылка на бланк заказа</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;gap:7px;padding:0 11px;font-size:13px;color:#5C8A3F"><span class="ms" style="font-size:17px">link</span>order_2026-0001.pdf</div></div>
+          <div style="grid-column:span 2"><label style="font-size:11.5px;color:#7C7565;font-weight:500;display:block;margin-bottom:5px">Примечание</label><div style="height:38px;border:1px solid #E1DBCE;border-radius:8px;background:#fff;display:flex;align-items:center;padding:0 11px;font-size:13px;color:#5A5448">сетевой, ~300 магазинов Maxima</div></div>
+        </div>
+
+        <!-- состав заказа -->
+        <div style="display:flex;align-items:center;gap:10px;margin:22px 0 12px">
+          <span style="font-family:'IBM Plex Mono';font-size:10px;letter-spacing:1px;color:#A79F8E">СОСТАВ ЗАКАЗА</span>
+          <div style="flex:1;height:1px;background:#E4DFD4"></div>
+          <span style="font-size:12px;color:#5C8A3F;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px"><span class="ms" style="font-size:16px">add</span>Добавить SKU</span>
+        </div>
+        <div style="background:#fff;border:1px solid #E4DFD4;border-radius:12px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+            <thead><tr style="text-align:left;color:#9C9586;font-size:10.5px;letter-spacing:.3px;text-transform:uppercase;background:#FBFAF7">
+              <th style="padding:10px 12px;font-weight:500">SKU</th><th style="padding:10px 8px;font-weight:500">Штрихкод</th>
+              <th style="padding:10px 8px;font-weight:500">Вариант</th><th style="padding:10px 8px;font-weight:500;text-align:right">Кол-во</th>
+              <th style="padding:10px 8px;font-weight:500">Упаковка</th><th style="padding:10px 8px;font-weight:500">Язык</th>
+              <th style="padding:10px 8px;font-weight:500">Стикеры</th><th style="padding:10px 8px;font-weight:500;text-align:center">Шоубокс</th>
+              <th style="padding:10px 12px;font-weight:500">Остаток</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ formComp }}" as="r" hint-placeholder-count="3">
+                <tr style="border-top:1px solid #EFEBE2">
+                  <td style="padding:11px 12px;font-weight:600">{{ r.sku }}</td>
+                  <td style="padding:11px 8px;font-family:'IBM Plex Mono';font-size:11px;color:#8C8576">{{ r.bc }}</td>
+                  <td style="padding:11px 8px;color:#5A5448">{{ r.variant }}</td>
+                  <td style="padding:11px 8px;text-align:right"><span style="font-family:'IBM Plex Mono';font-size:12.5px;font-weight:600;border:1px solid {{ r.qtyBorder }};border-radius:6px;padding:3px 8px;display:inline-block">{{ r.qty }}</span></td>
+                  <td style="padding:11px 8px;color:#5A5448">{{ r.pack }}</td>
+                  <td style="padding:11px 8px;color:#5A5448">{{ r.lang }}</td>
+                  <td style="padding:11px 8px;color:#5A5448">{{ r.stick }}</td>
+                  <td style="padding:11px 8px;text-align:center;font-family:'IBM Plex Mono';color:#5A5448">{{ r.show }}</td>
+                  <td style="padding:11px 12px"><span style="display:inline-flex;align-items:center;gap:5px"><span class="ms" style="font-size:17px;color:{{ r.mc }}">{{ r.mark }}</span><span style="font-family:'IBM Plex Mono';font-size:11.5px;color:#6E685D">{{ r.stock }} · {{ r.note }}</span></span></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        <div style="font-size:11px;color:#9C9586;margin-top:8px;display:flex;align-items:center;gap:5px"><span class="ms" style="font-size:15px;color:#7FA45C">info</span>Метаданные обновления заполнятся автоматически: «Кто обновил» и «Дата последнего обновления».</div>
+      </div>
+
+      <!-- footer -->
+      <div style="padding:16px 26px;background:#fff;border-top:1px solid #E4DFD4;display:flex;align-items:center;gap:10px">
+        <button onClick="{{ checkStock }}" style="display:flex;align-items:center;gap:7px;height:40px;padding:0 16px;border-radius:9px;cursor:pointer;font-family:'IBM Plex Sans';font-size:13px;font-weight:600;background:{{ checkBg }};border:1px solid {{ checkBorder }};color:{{ checkColor }}"><span class="ms" style="font-size:18px">{{ checkIcon }}</span>{{ checkLabel }}</button>
+        <div style="flex:1"></div>
+        <button onClick="{{ closeForm }}" style="height:40px;padding:0 18px;border-radius:9px;border:1px solid #E1DBCE;background:#fff;color:#5A5448;font-family:'IBM Plex Sans';font-size:13px;font-weight:600;cursor:pointer">Сохранить черновик</button>
+        <button style="height:40px;padding:0 22px;border-radius:9px;border:none;background:#5C8A3F;color:#fff;font-family:'IBM Plex Sans';font-size:13px;font-weight:600;cursor:pointer;opacity:.55">Создать заказ</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+  {{ formSlot }}
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { screen:'command', drawer:null, formOpen:false, whFilter:'all', supFilter:'all', formChecked:false };
+
+  // ---------- palette ----------
+  C = {
+    ink:'#2A2722', sub:'#6E685D', mut:'#9C9586', line:'#E4DFD4', card:'#FFFFFF',
+    cream:'#F4F1E9', green:'#5C8A3F', greenSoft:'#EAF1E1', greenInk:'#3E6B2C',
+    red:'#C7503F', redSoft:'#FBE9E5', redInk:'#9A3527',
+    amber:'#CC8A2C', amberSoft:'#FAF0DC', amberInk:'#8A5A12',
+    slate:'#5E7A8C', slateSoft:'#E7EEF2', slateInk:'#3C5563',
+    apple:'#7FA45C', beige:'#EFE9DC'
+  };
+
+  // ---------- nav ----------
+  navDef(){
+    return {
+      top:[ {key:'command',label:'Command Center',icon:'space_dashboard'},
+            {key:'orders',label:'Заказы',icon:'receipt_long',badge:'12'} ],
+      roles:[ {key:'warehouse',label:'Кладовщик',icon:'inventory_2',badge:'4'},
+              {key:'supply',label:'Снабжение',icon:'package_2',badge:'8',crit:true},
+              {key:'production',label:'Производство',icon:'factory'},
+              {key:'logistics',label:'Логистика',icon:'local_shipping'},
+              {key:'payments',label:'Оплаты',icon:'payments',badge:'€202k',crit:true} ],
+      data:[ {key:'dataquality',label:'Data Quality',icon:'rule',badge:'76',crit:true},
+             {key:'clients',label:'Клиенты',icon:'groups'},
+             {key:'sku',label:'SKU / Номенклатура',icon:'category'},
+             {key:'uikit',label:'Design System',icon:'palette'},
+             {key:'settings',label:'Настройки',icon:'settings'} ]
+    };
+  }
+  navStyle(item){
+    const C=this.C, on=this.state.screen===item.key;
+    return { ...item,
+      bg: on?'rgba(127,164,92,.16)':'transparent',
+      color: on?'#F4F1EA':'#B7B1A2',
+      weight: on?600:500,
+      iconColor: on?'#A6C97F':'#857E6E',
+      badgeBg: item.crit? 'rgba(199,80,63,.22)':'rgba(255,255,255,.09)',
+      badgeColor: item.crit? '#E8917F':'#B7B1A2'
+    };
+  }
+
+  crumb(){
+    const m={command:['space_dashboard','Command Center'],orders:['receipt_long','Заказы'],
+      warehouse:['inventory_2','Кладовщик · диспетчер'],supply:['package_2','Снабжение'],
+      production:['factory','Производство'],logistics:['local_shipping','Логистика'],
+      payments:['payments','Оплаты и дебиторка'],dataquality:['rule','Data Quality · Хранитель ИИ'],
+      clients:['groups','Клиенты'],sku:['category','SKU / Номенклатура'],settings:['settings','Настройки'],
+      uikit:['palette','Design System']};
+    return m[this.state.screen]||m.command;
+  }
+
+  go(key){ this.setState({screen:key, drawer:null}); }
+
+  pill(kind){ const C=this.C; const m={
+      crit:['Критично',C.redSoft,C.redInk], warn:['Внимание',C.amberSoft,C.amberInk],
+      ok:['Норма',C.greenSoft,C.greenInk], info:['В работе',C.slateSoft,C.slateInk] };
+    return m[kind]; }
+
+  renderVals(){
+    const C=this.C, nd=this.navDef(), s=this.state, cr=this.crumb();
+    const sc=k=>s.screen===k;
+    return {
+      navTop: nd.top.map(i=>this.navStyle(i)),
+      navRoles: nd.roles.map(i=>this.navStyle(i)),
+      navData: nd.data.map(i=>this.navStyle(i)),
+      crumbIcon: cr[0], crumbTitle: cr[1],
+      onNav: (e)=>{ const el=e.target.closest('[data-screen]'); if(el) this.go(el.getAttribute('data-screen')); },
+      openForm: ()=> this.setState({formOpen:true}),
+      // screen flags
+      isCommand:sc('command'), isOrders:sc('orders'), isWarehouse:sc('warehouse'),
+      isSupply:sc('supply'), isProduction:sc('production'), isLogistics:sc('logistics'),
+      isPayments:sc('payments'), isDataQuality:sc('dataquality'), isClients:sc('clients'),
+      isSku:sc('sku'), isSettings:sc('settings'), isUikit:sc('uikit'),
+      screenStub: this.renderStub(),
+      formSlot: null,
+      ...this.formData(),
+      ...this.commandData(),
+      ...this.whData(),
+      ...this.drawerData(),
+      ...this.supplyData(),
+      ...this.productionData(),
+      ...this.logisticsData(),
+      ...this.paymentsData(),
+      ...this.dqData(),
+      ...this.ordersData(),
+      ...this.clientsData(),
+      ...this.skuData(),
+      palette:[
+        {n:'Фон',c:'#F1EEE7',r:'app background'},{n:'Карточка',c:'#FFFFFF',r:'surface'},
+        {n:'Чернила',c:'#2A2722',r:'text / dark ui'},{n:'Яблочный',c:'#5C8A3F',r:'primary · норма'},
+        {n:'Пастель',c:'#A6C97F',r:'accent soft'},{n:'Крем',c:'#EFE9DC',r:'beige'},
+        {n:'Критично',c:'#C7503F',r:'red · срыв'},{n:'Внимание',c:'#CC8A2C',r:'amber · риск'},
+        {n:'Норма',c:'#5C9A5C',r:'green · ok'},{n:'Инфо',c:'#5E7A8C',r:'slate-blue'},
+        {n:'Линия',c:'#E4DFD4',r:'borders'},{n:'Тёмная панель',c:'#23211C',r:'sidebar'}
+      ]
+    };
+  }
+  renderStub(){ return null; }
+  formData(){
+    const C=this.C;
+    const comp=[
+      {sku:'Меренге 35г Классика',bc:'4607...0012',name:'Меренге Классика',variant:'Классика',qty:'4 000',pack:'Флоупак',lang:'LV',stick:'LV',show:'8',ok:true,stock:'5 500',note:'—'},
+      {sku:'Меренге 35г Корица',bc:'4607...0029',name:'Меренге Корица',variant:'Корица',qty:'2 000',pack:'Флоупак',lang:'LV',stick:'LV',show:'8',ok:false,stock:'1 200',note:'не хватает 800'},
+      {sku:'100г Классика',bc:'4607...0103',name:'Пастила 100г',variant:'Классика',qty:'1 500',pack:'ШБ новые',lang:'LV',stick:'—',show:'12',ok:true,stock:'6 200',note:'—'}
+    ].map(r=>({...r, mark:r.ok?'check_circle':'error', mc:r.ok?C.green:C.red, qtyBorder:r.ok?'#E1DBCE':'#E8A99D'}));
+    const checked=this.state.formChecked;
+    return { formOpen:this.state.formOpen, closeForm:()=>this.setState({formOpen:false}), formComp:comp,
+      formChecked:checked, checkStock:()=>this.setState({formChecked:true}),
+      checkBg: checked?C.greenSoft:'#fff', checkBorder: checked?'#BBD4A3':'#E1DBCE', checkColor: checked?C.greenInk:'#5A5448',
+      checkLabel: checked?'Остатки проверены · 1 дефицит':'Проверить остатки', checkIcon: checked?'fact_check':'inventory' };
+  }
+  drawerData(){
+    const C=this.C, id=this.state.drawer;
+    if(!id) return { drawerOpen:false };
+    const o=this.whOrders().find(x=>x.id===id) || this.whOrders()[0];
+    const sm=this.whStatusMeta(o.status);
+    const comp=o.comp.map(c=>({...c, mark:c.ok?'check_circle':'error', mc:c.ok?C.green:C.red,
+      lack:c.ok?'':('−'+(c.qty-c.stock))}));
+    const packs=o.packs.map(p=>({...p, mark:p.ok?'check_circle':'error', mc:p.ok?C.green:C.red}));
+    const allOk=o.comp.every(c=>c.ok)&&o.packs.every(p=>p.ok);
+    return { drawerOpen:true, dOrder:o, dComp:comp, dPacks:packs, dReady:o.ready, dNote:o.note||'—',
+      dStLabel:sm[0], dStBg:sm[1], dStColor:sm[2],
+      dHint: allOk?'Все позиции обеспечены — можно собирать':'Есть нехватка — нужен дозаказ / допроизводство',
+      dHintColor: allOk?C.greenInk:C.amberInk, dHintBg: allOk?C.greenSoft:C.amberSoft,
+      closeDrawer:()=>this.setState({drawer:null}) };
+  }
+
+  commandData(){
+    const C=this.C;
+    const kpis=[
+      {label:'Заказы сегодня',val:'14',sub:'8 готовы · 6 в сборке',tone:'ok',icon:'today',delta:'+3'},
+      {label:'Заказы завтра',val:'11',sub:'2 ждут товар',tone:'info',icon:'event_upcoming',delta:''},
+      {label:'Просроченные отгрузки',val:'3',sub:'Beryozka, Leis, Rewers',tone:'crit',icon:'running_with_errors',delta:''},
+      {label:'Новые заказы',val:'5',sub:'за последние 24ч',tone:'info',icon:'fiber_new',delta:''},
+      {label:'Заказы с проблемами',val:'7',sub:'нехватка / данные',tone:'warn',icon:'report_problem',delta:''},
+      {label:'Заказы без оплаты',val:'254',sub:'из 623 выполненных',tone:'crit',icon:'money_off',delta:''},
+      {label:'Сумма заказов / месяц',val:'€118.3k',sub:'июнь 2026 · +9% м/м',tone:'ok',icon:'euro',delta:'+9%'},
+      {label:'Зависшая дебиторка',val:'€202.1k',sub:'€48k > 90 дней',tone:'crit',icon:'account_balance_wallet',delta:''},
+      {label:'Дефицит товара (SKU)',val:'2',sub:'Корица 35г, Вишня',tone:'warn',icon:'inventory',delta:''},
+      {label:'Дефицит упаковки',val:'8',sub:'5 позиций на нуле',tone:'crit',icon:'package_2',delta:''}
+    ].map(k=>({...k, ...this.kpiTone(k.tone)}));
+
+    const flags=[
+      {sev:'crit',title:'Обечайки Микс PL — покрытие 0.6 мес',desc:'Остаток 9 446 при расходе ~15 000/мес, срок изготовления 50 дней. Нужно ~38 000 уже сейчас.',act:'Заявка поставщику',to:'supply'},
+      {sev:'crit',title:'€202k выручки без отметки оплаты',desc:'254 завершённых заказа из 623 (26%) — невозможно отличить оплаченное от зависшего.',act:'Открыть контур AR',to:'payments'},
+      {sev:'crit',title:'3 просроченные отгрузки сегодня',desc:'Beryozka (Болгария), Leis GmbH (Германия), Rewers — риск штрафа за срыв срока.',act:'Логистика',to:'logistics'},
+      {sev:'warn',title:'Расхождение учёта ГП −4.1%',desc:'−10 880 шт, концентрация на переходных SKU: Классика PL (−6 800), Микс PL (−4 080).',act:'Data Quality',to:'dataquality'},
+      {sev:'warn',title:'36% заказов без владельца',desc:'335 из 925 заказов не имеют названного менеджера — дыра в ответственности.',act:'Хранитель ИИ',to:'dataquality'}
+    ].map(f=>({...f, ...this.flagTone(f.sev)}));
+
+    const revenue=[
+      {m:'Янв',v:58,kg:8.9},{m:'Фев',v:71,kg:10.4},{m:'Мар',v:64,kg:9.1},{m:'Апр',v:69,kg:7.6},
+      {m:'Май',v:52,kg:4.9},{m:'Июн',v:118,kg:8.1}
+    ];
+    const maxRev=Math.max(...revenue.map(r=>r.v));
+    const revBars=revenue.map(r=>({...r, barH:Math.round(r.v/maxRev*150)+'px', barColor: r.m==='Июн'?'#5C8A3F':'#A6C97F'}));
+    const cmdFilters=[{k:'Период:',v:' Июнь 2026'},{k:'Менеджер:',v:' Все'},{k:'Страна:',v:' Все'},{k:'Клиент:',v:' Все'},{k:'Статус:',v:' Все'},{k:'Проблема:',v:' Все'}];
+
+    const topClients=[
+      {n:'Me Gusto',v:'€100.2k',pct:'13%',w:100},
+      {n:'Beryozka',v:'€63.4k',pct:'8%',w:63},
+      {n:'futurus food',v:'€41.0k',pct:'5%',w:41},
+      {n:'Leis GmbH',v:'€33.8k',pct:'4%',w:34},
+      {n:'Posylka.de',v:'€28.1k',pct:'4%',w:28}
+    ];
+    const topManagers=[
+      {n:'Жанна',role:'ЕС / Латвия',orders:452,v:'€363.2k',chk:'€813',pay:63},
+      {n:'Глеб',role:'РФ',orders:51,v:'€221.3k',chk:'€4 516',pay:76},
+      {n:'«RU» канал',role:'без имени',orders:36,v:'€162.4k',chk:'€4 640',pay:78},
+      {n:'Интернет-магазин',role:'Латвия',orders:76,v:'€8.1k',chk:'€106',pay:17}
+    ];
+    const dataErrors=[
+      {t:'Заказы без владельца',v:'335',base:'из 925',tone:'warn'},
+      {t:'Завершённые без оплаты',v:'254',base:'из 623',tone:'crit'},
+      {t:'Дубли клиентов',v:'17',base:'групп + 43 числа',tone:'warn'},
+      {t:'Расхождение остатка ГП',v:'−4.1%',base:'−10 880 шт',tone:'crit'}
+    ].map(e=>({...e,...this.miniTone(e.tone)}));
+
+    const probOrders=[
+      {id:'2026-0001',cl:'futurus food',mgr:'Жанна',ctry:'Латвия',sum:'€4 280',date:'28.06',prob:'Нехватка товара',tone:'warn'},
+      {id:'2025-0912',cl:'Beryozka',mgr:'«RU»',ctry:'Болгария',sum:'€6 140',date:'24.06',prob:'Просрочка отгрузки',tone:'crit'},
+      {id:'2025-0888',cl:'Leis GmbH',mgr:'Жанна',ctry:'Германия',sum:'€14 020',date:'20.06',prob:'Зависло > 90 дней',tone:'crit'},
+      {id:'2026-0044',cl:'Me Gusto',mgr:'Глеб',ctry:'РФ',sum:'€9 870',date:'27.06',prob:'Без отметки оплаты',tone:'crit'},
+      {id:'2026-0051',cl:'Rewers',mgr:'—',ctry:'Литва',sum:'€2 410',date:'26.06',prob:'Без владельца',tone:'warn'},
+      {id:'2026-0033',cl:'3banani',mgr:'Жанна',ctry:'Латвия',sum:'€1 980',date:'29.06',prob:'Дефицит упаковки',tone:'warn'}
+    ].map(o=>{ const p=this.pill(o.tone); return {...o, probBg:p[1], probColor:p[2]}; });
+
+    topClients.forEach(c=>c.barW=c.w+'%');
+    topManagers.forEach(m=>m.payColor = m.pay>=70?'#5C8A3F':(m.pay>=40?'#CC8A2C':'#C7503F'));
+    return { kpis, flags, revBars, cmdFilters, topClients, topManagers, dataErrors, probOrders,
+      goSupply:()=>this.go('supply'), goPayments:()=>this.go('payments'),
+      onFlagClick:(e)=>{const el=e.target.closest('[data-to]'); if(el)this.go(el.getAttribute('data-to'));},
+      onProbClick:(e)=>{const el=e.target.closest('[data-order]'); if(el)this.openDrawer(el.getAttribute('data-order'));} };
+  }
+  // ---------- WAREHOUSE ----------
+  whOrders(){
+    return [
+      {id:'2026-0001',cl:'futurus food',date:'28.06 · завтра',goods:'warn',pack:'ok',status:'short_goods',todo:'Допроизвести Корицу 35г',
+        comp:[{sku:'Меренге 35г Классика',qty:4000,stock:5500,ok:true},{sku:'Меренге 35г Корица',qty:2000,stock:1200,ok:false},{sku:'100г Классика',qty:1500,stock:6200,ok:true}],
+        packs:[{n:'Обечайки Микс PL',need:6000,stock:9446,ok:true},{n:'Гофрокороб 35г',need:120,stock:840,ok:true},{n:'Стикеры LV',need:7500,stock:22000,ok:true}],
+        ready:'30.06 16:00', note:'Сетевой заказ Maxima, ~300 магазинов. Раскладка по сети.'},
+      {id:'2026-0014',cl:'Tirgus Online',date:'27.06 · сегодня',goods:'ok',pack:'ok',status:'ready',todo:'Бронь транспорта',
+        comp:[{sku:'AppLite 17г Ассорти',qty:300,stock:1800,ok:true},{sku:'100г Вишня',qty:150,stock:900,ok:true}],
+        packs:[{n:'Гофрокороб микс',need:18,stock:320,ok:true},{n:'Стикеры LV',need:450,stock:22000,ok:true}],
+        ready:'27.06 14:00', note:'Розница, мелкая сборка.'},
+      {id:'2026-0033',cl:'3banani',date:'29.06',goods:'ok',pack:'crit',status:'short_pack',todo:'Заявка снабжению: Вишня',
+        comp:[{sku:'Меренге 35г Вишня',qty:1200,stock:3400,ok:true},{sku:'Зефир Классика',qty:600,stock:2100,ok:true}],
+        packs:[{n:'Обечайки Вишня',need:1200,stock:640,ok:false},{n:'Гофрокороб 35г',need:36,stock:840,ok:true}],
+        ready:'01.07 (ждёт упаковку)', note:'Упаковка Вишня на грани — 0.5 мес покрытия.'},
+      {id:'2026-0040',cl:'Arkadia Trade',date:'27.06 · сегодня',goods:'ok',pack:'ok',status:'assembling',todo:'Идёт сборка',
+        comp:[{sku:'100г Классика',qty:2400,stock:6200,ok:true},{sku:'180г LV Брусника',qty:400,stock:1500,ok:true}],
+        packs:[{n:'Гофрокороб 100г',need:80,stock:560,ok:true},{n:'Стрейч',need:4,stock:60,ok:true}],
+        ready:'27.06 17:30', note:''},
+      {id:'2026-0051',cl:'Rewers',date:'28.06 · завтра',goods:'ok',pack:'ok',status:'today_check',todo:'Проверить состав',
+        comp:[{sku:'Меренге 35г Классика',qty:1800,stock:5500,ok:true}],
+        packs:[{n:'Обечайки Классика PL',need:1800,stock:15719,ok:true}],
+        ready:'29.06 12:00', note:'Без названного владельца — уточнить.'},
+      {id:'2026-0027',cl:'Langino',date:'26.06',goods:'ok',pack:'ok',status:'packed',todo:'Ждёт машину',
+        comp:[{sku:'100г Классика',qty:3000,stock:6200,ok:true},{sku:'100г Кедр',qty:500,stock:1826,ok:true}],
+        packs:[{n:'Гофрокороб 100г',need:100,stock:560,ok:true}],
+        ready:'26.06 готов', note:'Собран, ждёт транспорт на Германию.'}
+    ];
+  }
+  whStatusMeta(k){ const C=this.C; const m={
+    ready:['Готов к сборке',C.greenSoft,C.greenInk],
+    short_goods:['Не хватает товара',C.redSoft,C.redInk],
+    short_pack:['Не хватает упаковки',C.amberSoft,C.amberInk],
+    assembling:['В сборке',C.slateSoft,C.slateInk],
+    packed:['Собран, не отгружен',C.greenSoft,C.greenInk],
+    today_check:['К проверке',C.cream,C.sub] }; return m[k]; }
+  whData(){
+    const C=this.C, orders=this.whOrders();
+    const f=this.state.whFilter;
+    const counts={ all:orders.length, today_check:2, ready:1, short_goods:1, short_pack:1, assembling:1, packed:1 };
+    const tabs=[
+      {k:'all',label:'Все',c:orders.length},{k:'today_check',label:'Сегодня',c:2},{k:'tomorrow',label:'Завтра',c:3},
+      {k:'ready',label:'Готово к сборке',c:1},{k:'short_goods',label:'Не хватает товара',c:1,crit:true},
+      {k:'short_pack',label:'Не хватает упаковки',c:1,warn:true},{k:'assembling',label:'В сборке',c:1},
+      {k:'packed',label:'Собрано, не отгружено',c:1}
+    ].map(t=>({...t, tbg: this.state.whFilter===t.k?'#2E2B25':'#fff', tcolor:this.state.whFilter===t.k?'#F4F1EA':'#5A5448', tborder:this.state.whFilter===t.k?'#2E2B25':'#E1DBCE',
+      tcbg:this.state.whFilter===t.k?'rgba(255,255,255,.15)':(t.crit?C.redSoft:(t.warn?C.amberSoft:'#F0ECE3')), tccolor:this.state.whFilter===t.k?'#F4F1EA':(t.crit?C.redInk:(t.warn?C.amberInk:'#7C7565')) }));
+    let rows = f==='all'?orders : (f==='tomorrow'? orders.filter(o=>/завтра/.test(o.date)) : orders.filter(o=>o.status===f));
+    rows = rows.map(o=>{ const sm=this.whStatusMeta(o.status); return {...o,
+      stBg:sm[1], stColor:sm[2], stLabel:sm[0],
+      goodsIcon:o.goods==='ok'?'check_circle':(o.goods==='warn'?'error':'cancel'),
+      goodsColor:o.goods==='ok'?C.green:(o.goods==='warn'?C.amber:C.red),
+      packIcon:o.pack==='ok'?'check_circle':(o.pack==='warn'?'error':'cancel'),
+      packColor:o.pack==='ok'?C.green:(o.pack==='crit'?C.red:C.amber) }; });
+    return { whTabs:tabs, whRows:rows,
+      onWhTab:(e)=>{const el=e.target.closest('[data-tab]');if(el)this.setState({whFilter:el.getAttribute('data-tab')});},
+      onWhRow:(e)=>{const el=e.target.closest('[data-order]');if(el)this.openDrawer(el.getAttribute('data-order'));} };
+  }
+  // ---------- SUPPLY ----------
+  supplyData(){
+    const C=this.C;
+    const kpis=[
+      {label:'Критичных позиций',val:'8',tone:'crit',icon:'priority_high'},
+      {label:'На нуле',val:'5',tone:'crit',icon:'remove_shopping_cart'},
+      {label:'< 14 дней покрытия',val:'6',tone:'warn',icon:'hourglass_bottom'},
+      {label:'Долгие позиции (флоупак)',val:'2',tone:'warn',icon:'schedule'},
+      {label:'Открытых заявок',val:'3',tone:'info',icon:'description'}
+    ].map(k=>({...k,...this.kpiTone(k.tone)}));
+    const rows=[
+      {pos:'Обечайки Микс PL',type:'Флоупак',rest:'9 446',use:'14 960',cov:'0.6',lead:'50 дн',rop:'24 900',order:'38 000',tone:'crit'},
+      {pos:'Ассорти (обечайка)',type:'Обечайка',rest:'0',use:'22',cov:'0.0',lead:'14 дн',rop:'11',order:'500',tone:'crit'},
+      {pos:'Вишня (обечайка)',type:'Обечайка',rest:'640',use:'1 368',cov:'0.5',lead:'14 дн',rop:'684',order:'3 000',tone:'crit'},
+      {pos:'Чёрная смородина',type:'Обечайка',rest:'802',use:'1 578',cov:'0.5',lead:'14 дн',rop:'790',order:'3 200',tone:'crit'},
+      {pos:'Обечайки Классика PL',type:'Флоупак',rest:'15 719',use:'10 781',cov:'1.5',lead:'50 дн',rop:'18 000',order:'22 000',tone:'warn'},
+      {pos:'Кедр (обечайка)',type:'Обечайка',rest:'1 826',use:'1 534',cov:'1.2',lead:'14 дн',rop:'770',order:'2 000',tone:'warn'},
+      {pos:'Классика 50 г',type:'Флоупак',rest:'236',use:'192',cov:'1.2',lead:'40 дн',rop:'260',order:'1 200',tone:'warn'},
+      {pos:'Скотч (упаковочный)',type:'Расходник',rest:'21',use:'15',cov:'1.4',lead:'7 дн',rop:'8',order:'60',tone:'warn'},
+      {pos:'Гофрокороб 35 г',type:'Гофра',rest:'840',use:'420',cov:'2.0',lead:'14 дн',rop:'210',order:'—',tone:'ok'},
+      {pos:'Стикеры LV',type:'Стикеры',rest:'22 000',use:'9 000',cov:'2.4',lead:'7 дн',rop:'2 100',order:'—',tone:'ok'}
+    ].map(r=>{ const p=this.pill(r.tone==='ok'?'ok':(r.tone==='warn'?'warn':'crit'));
+      return {...r, covColor: r.tone==='crit'?C.red:(r.tone==='warn'?C.amber:C.green),
+        stBg:p[1], stColor:p[2], stLabel:(r.tone==='crit'?'Заказать сегодня':(r.tone==='warn'?'Скоро заказ':'Норма')),
+        orderColor: r.order==='—'?C.mut:C.ink }; });
+    const f=this.state.supFilter;
+    const filtered = f==='all'?rows : (f==='urgent'?rows.filter(r=>r.tone==='crit') : (f==='flow'?rows.filter(r=>r.type==='Флоупак') : (f==='order'?rows.filter(r=>r.order!=='—'):rows)));
+    const supTabs=[{k:'all',l:'Все позиции'},{k:'urgent',l:'Срочно',crit:true},{k:'flow',l:'Флоупак'},{k:'order',l:'Нужно заказать'},{k:'transit',l:'В пути'}]
+      .map(t=>({...t, tbg:this.state.supFilter===t.k?'#2E2B25':'#fff', tcolor:this.state.supFilter===t.k?'#F4F1EA':'#5A5448', tborder:this.state.supFilter===t.k?'#2E2B25':'#E1DBCE'}));
+    return { supKpis:kpis, supRows:filtered, supTabs,
+      onSupTab:(e)=>{const el=e.target.closest('[data-tab]');if(el)this.setState({supFilter:el.getAttribute('data-tab')});} };
+  }
+  // ---------- PRODUCTION ----------
+  productionData(){
+    const C=this.C;
+    const kpis=[
+      {label:'План на день',val:'7 900',sub:'шт · смена',tone:'info',icon:'assignment'},
+      {label:'Факт',val:'6 240',sub:'на 14:00',tone:'warn',icon:'done_all'},
+      {label:'Выполнение плана',val:'79%',sub:'отставание 1 660 шт',tone:'warn',icon:'speed'},
+      {label:'Дефицит под заказы',val:'800',sub:'Корица 35г',tone:'crit',icon:'production_quantity_limits'},
+      {label:'Узкие SKU',val:'2',sub:'Корица, Вишня',tone:'warn',icon:'warning'},
+      {label:'Загрузка фасовщиков',val:'92%',sub:'3 чел на смене',tone:'ok',icon:'groups'}
+    ].map(k=>({...k,...this.kpiTone(k.tone)}));
+    const rows=[
+      {sku:'Меренге 35г Корица',ord:800,rep:1200,prio:'Высокий',tone:'crit',status:'queued',ready:'к 16:00'},
+      {sku:'Меренге 35г Классика',ord:4000,rep:2000,prio:'Высокий',tone:'crit',status:'running',ready:'в работе'},
+      {sku:'100г Классика',ord:1500,rep:3000,prio:'Средний',tone:'warn',status:'running',ready:'в работе'},
+      {sku:'Меренге 35г Вишня',ord:1200,rep:600,prio:'Средний',tone:'warn',status:'queued',ready:'к 18:00'},
+      {sku:'Зефир Классика',ord:600,rep:1500,prio:'Низкий',tone:'ok',status:'planned',ready:'завтра'},
+      {sku:'180г LV Брусника',ord:400,rep:800,prio:'Низкий',tone:'ok',status:'done',ready:'готово'}
+    ].map(r=>{ const p=this.pill(r.tone); const sm={queued:['В очереди',C.slateSoft,C.slateInk],running:['В работе',C.amberSoft,C.amberInk],planned:['Запланировано',C.cream,C.sub],done:['Готово',C.greenSoft,C.greenInk]}[r.status];
+      return {...r, prioColor:r.tone==='crit'?C.red:(r.tone==='warn'?C.amber:C.green), stBg:sm[1], stColor:sm[2], stLabel:sm[0], total:r.ord+r.rep}; });
+    const shift=[
+      {m:'Май 25',v:1734},{m:'Авг 25',v:3448},{m:'Ноя 25',v:5439},{m:'Фев 26',v:5333},{m:'Май 26',v:6413},{m:'Июн 26',v:7888}
+    ]; const mx=Math.max(...shift.map(s=>s.v));
+    const shiftBars=shift.map(s=>({...s, barH:Math.round(s.v/mx*140)+'px', last:s.m==='Июн 26', barColor:s.m==='Июн 26'?'#5C8A3F':'#A6C97F'}));
+    return { prodKpis:kpis, prodRows:rows, shiftBars };
+  }
+  // ---------- LOGISTICS ----------
+  logisticsData(){
+    const C=this.C;
+    const kpis=[
+      {label:'К отгрузке сегодня',val:'6',tone:'info',icon:'today'},
+      {label:'К отгрузке завтра',val:'5',tone:'info',icon:'event_upcoming'},
+      {label:'Не готово',val:'2',tone:'warn',icon:'pending'},
+      {label:'Транспорт не назначен',val:'3',tone:'crit',icon:'no_crash'},
+      {label:'Документы не готовы',val:'2',tone:'warn',icon:'description'}
+    ].map(k=>({...k,...this.kpiTone(k.tone)}));
+    const rows=[
+      {id:'2026-0027',cl:'Langino',dir:'Германия',date:'27.06',ready:'ok',docs:'ok',transport:'Назначен · DPD',tone:'ok'},
+      {id:'2025-0912',cl:'Beryozka',dir:'Болгария',date:'24.06',ready:'ok',docs:'warn',transport:'Не назначен',tone:'crit'},
+      {id:'2026-0014',cl:'Tirgus Online',dir:'Латвия',date:'27.06',ready:'ok',docs:'ok',transport:'Своя машина',tone:'ok'},
+      {id:'2026-0040',cl:'Arkadia Trade',dir:'Латвия',date:'27.06',ready:'warn',docs:'ok',transport:'Назначен · Omniva',tone:'warn'},
+      {id:'2026-0001',cl:'futurus food',dir:'Латвия',date:'28.06',ready:'warn',docs:'warn',transport:'Не назначен',tone:'warn'},
+      {id:'2025-0888',cl:'Leis GmbH',dir:'Германия',date:'28.06',ready:'ok',docs:'ok',transport:'Не назначен',tone:'crit'}
+    ].map(r=>{ const p=this.pill(r.tone);
+      return {...r, readyIc:r.ready==='ok'?'check_circle':'error', readyC:r.ready==='ok'?C.green:C.amber,
+        docsIc:r.docs==='ok'?'check_circle':'error', docsC:r.docs==='ok'?C.green:C.amber,
+        trColor:/Не назначен/.test(r.transport)?C.red:C.ink }; });
+    const dirs=[{n:'Латвия',pct:46,c:'#5C8A3F'},{n:'Германия',pct:21,c:'#7FA45C'},{n:'Эстония',pct:9,c:'#A6C97F'},{n:'Литва',pct:8,c:'#C8DBB4'},{n:'Болгария',pct:7,c:'#5E7A8C'},{n:'Прочее',pct:9,c:'#C9C2B3'}]
+      .map(d=>({...d, w:d.pct+'%'}));
+    return { logKpis:kpis, logRows:rows, logDirs:dirs };
+  }
+  // ---------- PAYMENTS ----------
+  paymentsData(){
+    const C=this.C;
+    const kpis=[
+      {label:'Слепая дебиторка',val:'€202.1k',sub:'254 заказа без оплаты',tone:'crit',icon:'visibility_off'},
+      {label:'Зависло > 90 дней',val:'€48.0k',sub:'Leis, Posylka, ZIP',tone:'crit',icon:'hourglass_disabled'},
+      {label:'30–90 дней',val:'€87.4k',sub:'на контроле',tone:'warn',icon:'schedule'},
+      {label:'0–30 дней',val:'€66.7k',sub:'в норме',tone:'ok',icon:'check_circle'},
+      {label:'Спящие клиенты',val:'12',sub:'> 120 дней без заказа',tone:'warn',icon:'bedtime'}
+    ].map(k=>({...k,...this.kpiTone(k.tone)}));
+    const rows=[
+      {cl:'Leis GmbH',ch:'Жанна',sum:'€14 020',days:112,seg:'crit',last:'08.03.26'},
+      {cl:'Posylka.de',ch:'Жанна',sum:'€13 180',days:104,seg:'crit',last:'16.03.26'},
+      {cl:'ZIP Trade',ch:'«RU»',sum:'€12 900',days:98,seg:'crit',last:'22.03.26'},
+      {cl:'Me Gusto',ch:'Глеб',sum:'€9 870',days:54,seg:'warn',last:'04.05.26'},
+      {cl:'Fruchtschmaus',ch:'Жанна',sum:'€6 240',days:41,seg:'warn',last:'17.05.26'},
+      {cl:'3banani',ch:'Жанна',sum:'€2 410',days:18,seg:'ok',last:'09.06.26'}
+    ].map(r=>{ const p=this.pill(r.seg);
+      return {...r, segBg:p[1], segColor:p[2], segLabel:(r.seg==='crit'?'> 90 дней':(r.seg==='warn'?'30–90 дней':'0–30 дней')),
+        daysColor:r.seg==='crit'?C.red:(r.seg==='warn'?C.amber:C.green) }; });
+    return { payKpis:kpis, payRows:rows };
+  }
+  // ---------- DATA QUALITY ----------
+  dqData(){
+    const C=this.C;
+    const kpis=[
+      {label:'Заказы без статуса',val:'47',tone:'warn'},{label:'Заказы без менеджера',val:'335',tone:'crit'},
+      {label:'Заказы без даты отгрузки',val:'15',tone:'warn'},{label:'Выполнено без оплаты',val:'254',tone:'crit'},
+      {label:'Дубли клиентов',val:'17',tone:'warn'},{label:'Дубли SKU',val:'9',tone:'warn'},
+      {label:'Расхождения остатков',val:'−4.1%',tone:'crit'}
+    ].map(k=>({...k,...this.kpiTone(k.tone), mc:k.tone==='crit'?C.red:C.amber}));
+    const rows=[
+      {type:'Дубль клиента',ent:'Fruchtschmaus',desc:'7+ написаний: FruschtSmaus, Fruschtschmauss, Fruchsmaus…',crit:'Высокая',who:'Хранитель ИИ',status:'fixing',tone:'crit'},
+      {type:'Без оплаты',ent:'254 заказа',desc:'26% завершённой выручки без отметки оплаты (€202k)',crit:'Высокая',who:'Глеб / Жанна',status:'open',tone:'crit'},
+      {type:'Без владельца',ent:'335 заказов',desc:'36% реестра без названного менеджера',crit:'Высокая',who:'Хранитель ИИ',status:'open',tone:'crit'},
+      {type:'Расхождение остатка',ent:'Классика PL',desc:'Книжный − факт = −6 800 шт (переходная упаковка)',crit:'Высокая',who:'Снабжение',status:'fixing',tone:'crit'},
+      {type:'Клиент-число',ent:'43 записи',desc:'Номер вместо имени — онлайн-заказы',crit:'Средняя',who:'Хранитель ИИ',status:'open',tone:'warn'},
+      {type:'Дубль SKU',ent:'Классика ШБ',desc:'«Классика ШБ» / «Классика ШБ новые» / «Классика новая 6»',crit:'Средняя',who:'Производство',status:'fixing',tone:'warn'},
+      {type:'Дата отгрузки < приёма',ent:'6 заказов',desc:'Ошибка ввода дат — отгрузка раньше приёма',crit:'Низкая',who:'Михаил',status:'done',tone:'ok'}
+    ].map(r=>{ const sm={open:['Открыто',C.redSoft,C.redInk],fixing:['Исправляется',C.amberSoft,C.amberInk],done:['Исправлено',C.greenSoft,C.greenInk]}[r.status];
+      const cp=this.pill(r.tone);
+      return {...r, stBg:sm[1], stColor:sm[2], stLabel:sm[0], critColor:r.tone==='crit'?C.red:(r.tone==='warn'?C.amber:C.green) }; });
+    return { dqKpis:kpis, dqRows:rows };
+  }
+  // ---------- ORDERS / CLIENTS / SKU ----------
+  ordersData(){
+    const C=this.C;
+    const rows=[
+      {id:'2026-0001',cl:'futurus food',mgr:'Жанна',ctry:'Латвия',date:'28.06',sum:'€4 280',st:'accepted',pay:'unpaid'},
+      {id:'2026-0014',cl:'Tirgus Online',mgr:'Интернет',ctry:'Латвия',date:'27.06',sum:'€186',st:'ready',pay:'paid'},
+      {id:'2026-0027',cl:'Langino',mgr:'Жанна',ctry:'Германия',date:'27.06',sum:'€3 940',st:'packed',pay:'paid'},
+      {id:'2026-0033',cl:'3banani',mgr:'Жанна',ctry:'Латвия',date:'29.06',sum:'€1 980',st:'accepted',pay:'unpaid'},
+      {id:'2026-0040',cl:'Arkadia Trade',mgr:'Жанна',ctry:'Латвия',date:'27.06',sum:'€2 410',st:'assembling',pay:'paid'},
+      {id:'2026-0044',cl:'Me Gusto',mgr:'Глеб',ctry:'РФ',date:'27.06',sum:'€9 870',st:'done',pay:'unknown'},
+      {id:'2026-0051',cl:'Rewers',mgr:'—',ctry:'Литва',date:'28.06',sum:'€2 410',st:'accepted',pay:'unpaid'},
+      {id:'2025-0888',cl:'Leis GmbH',mgr:'Жанна',ctry:'Германия',date:'20.06',sum:'€14 020',st:'done',pay:'overdue'},
+      {id:'2025-0912',cl:'Beryozka',mgr:'«RU»',ctry:'Болгария',date:'24.06',sum:'€6 140',st:'ready',pay:'unpaid'}
+    ].map(r=>{ const sm={accepted:['Принят',C.slateSoft,C.slateInk],ready:['Готов',C.greenSoft,C.greenInk],assembling:['В сборке',C.amberSoft,C.amberInk],packed:['Собран',C.greenSoft,C.greenInk],done:['Выполнен',C.cream,C.sub]}[r.st];
+      const pm={paid:['Оплачен',C.green],unpaid:['Не оплачен',C.amber],overdue:['Просрочен',C.red],unknown:['Нет данных',C.mut]}[r.pay];
+      return {...r, stBg:sm[1], stColor:sm[2], stLabel:sm[0], payColor:pm[1], payLabel:pm[0]}; });
+    return { ordRows:rows };
+  }
+  clientsData(){
+    const C=this.C;
+    const rows=[
+      {n:'Интернет-заказы',ord:68,rev:'€8.1k',ch:'Онлайн',dup:'2 варианта: Internet / internet',tone:'warn'},
+      {n:'Tirgus Online',ord:51,rev:'€12.4k',ch:'Онлайн',dup:'канонизирован',tone:'ok'},
+      {n:'futurus food',ord:33,rev:'€41.0k',ch:'Жанна',dup:'5 вариантов: Maxima, 6 Maxima (FF)…',tone:'warn'},
+      {n:'Fruchtschmaus',ord:19,rev:'€28.4k',ch:'Жанна',dup:'7+ написаний — слиты',tone:'crit'},
+      {n:'Beryozka',ord:18,rev:'€63.4k',ch:'Жанна / «RU»',dup:'2 канала — один клиент',tone:'warn'},
+      {n:'Me Gusto',ord:24,rev:'€100.2k',ch:'Глеб / «RU»',dup:'канонизирован',tone:'ok'},
+      {n:'Leis GmbH',ord:16,rev:'€33.8k',ch:'Жанна',dup:'канонизирован',tone:'ok'}
+    ].map(r=>{ const cp=this.pill(r.tone); return {...r, dupBg:cp[1], dupColor:cp[2],
+      dupIcon:r.tone==='ok'?'verified':'merge'}; });
+    return { cliRows:rows };
+  }
+  skuData(){
+    const C=this.C;
+    const rows=[
+      {sku:'100г Классика',line:'100 г',fl:'Классика',ship:'973 634',stock:'6 200',pack:'ШБ новые',ver:'актуальна',tone:'ok'},
+      {sku:'Меренге 35г Классика',line:'Меренге 35 г',fl:'Классика',ship:'227 401',stock:'5 500',pack:'Флоупак',ver:'актуальна',tone:'ok'},
+      {sku:'Меренге 35г Корица',line:'Меренге 35 г',fl:'Корица',ship:'88 200',stock:'1 200',pack:'Флоупак',ver:'актуальна',tone:'warn'},
+      {sku:'Классика ШБ',line:'100 г',fl:'Классика',ship:'—',stock:'0',pack:'ШБ старая',ver:'устарела — дубль',tone:'crit'},
+      {sku:'AppLite 17г Ассорти',line:'AppLite',fl:'Ассорти',ship:'34 100',stock:'1 800',pack:'Обечайка',ver:'на нуле',tone:'crit'},
+      {sku:'180г LV Брусника',line:'180 г LV',fl:'Брусника',ship:'12 400',stock:'1 500',pack:'ШБ',ver:'актуальна',tone:'ok'}
+    ].map(r=>{ const cp=this.pill(r.tone); return {...r, verBg:cp[1], verColor:cp[2]}; });
+    return { skuRows:rows };
+  }
+  kpiTone(t){ const C=this.C; const m={ok:[C.green,C.greenSoft],warn:[C.amber,C.amberSoft],crit:[C.red,C.redSoft],info:[C.slate,C.slateSoft]}; const v=m[t]; return {accent:v[0],accentSoft:v[1]}; }
+  flagTone(t){ const C=this.C; return t==='crit'?{fbg:C.redSoft,fbar:C.red,fic:C.redInk,ficon:'error'}:{fbg:C.amberSoft,fbar:C.amber,fic:C.amberInk,ficon:'warning'}; }
+  miniTone(t){ const C=this.C; return t==='crit'?{mc:C.red}:{mc:C.amber}; }
+  openDrawer(id){ this.setState({drawer:id}); }
+}
+</script>
+</body>
+</html>

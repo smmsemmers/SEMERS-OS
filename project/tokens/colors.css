@@ -1,0 +1,66 @@
+/* SEMERS OS — color system.
+   Warm, premium food-manufacturing palette on a light cream base.
+   Color carries meaning: green = norm, amber = warning, red = critical, slate-blue = info. */
+:root {
+  /* --- Base / surfaces --- */
+  --semers-bg:            #F1EEE7; /* app background (warm cream) */
+  --semers-bg-raised:     #FBFAF7; /* topbar, table headers */
+  --semers-surface:       #FFFFFF; /* cards, tables, panels */
+  --semers-surface-cream: #F4F1E9; /* subtle fills, chips */
+  --semers-beige:         #EFE9DC; /* beige accent fills */
+  --semers-panel-dark:    #23211C; /* sidebar */
+  --semers-panel-dark-2:  #2E2B25; /* dark cards (data quality, calculators) */
+
+  /* --- Ink / text --- */
+  --semers-ink:           #2A2722; /* primary text */
+  --semers-ink-sub:       #6E685D; /* secondary text */
+  --semers-ink-muted:     #9C9586; /* tertiary / placeholder */
+  --semers-ink-faint:     #A79F8E; /* eyebrow labels, icons-on-light */
+  --semers-on-dark:       #F4F1EA; /* text on dark panels */
+  --semers-on-dark-sub:   #CFC9BC; /* secondary text on dark */
+  --semers-on-dark-mut:   #8B8474; /* tertiary on dark */
+
+  /* --- Lines --- */
+  --semers-line:          #E4DFD4; /* card / table borders */
+  --semers-line-soft:     #EFEBE2; /* inner row dividers */
+  --semers-line-input:    #E1DBCE; /* input borders */
+
+  /* --- Brand / primary (apple green) --- */
+  --semers-green:         #5C8A3F; /* primary action */
+  --semers-green-ink:     #3E6B2C; /* text on green-soft */
+  --semers-green-soft:    #EAF1E1; /* green pill bg */
+  --semers-apple:         #7FA45C; /* lighter accent (logo, bars) */
+  --semers-apple-pastel:  #A6C97F; /* pastel accent, chart bars */
+
+  /* --- Semantic: critical (red) --- */
+  --semers-red:           #C7503F;
+  --semers-red-ink:       #9A3527;
+  --semers-red-soft:      #FBE9E5;
+  --semers-red-border:    #F1C9C0;
+
+  /* --- Semantic: warning (amber) --- */
+  --semers-amber:         #CC8A2C;
+  --semers-amber-ink:     #8A5A12;
+  --semers-amber-soft:    #FAF0DC;
+  --semers-amber-border:  #ECD6A8;
+
+  /* --- Semantic: info (slate-blue) --- */
+  --semers-slate:         #5E7A8C;
+  --semers-slate-ink:     #3C5563;
+  --semers-slate-soft:    #E7EEF2;
+  --semers-slate-border:  #C9DAE2;
+
+  /* --- Semantic aliases (use these in components) --- */
+  --text-primary:   var(--semers-ink);
+  --text-secondary: var(--semers-ink-sub);
+  --text-muted:     var(--semers-ink-muted);
+  --surface-card:   var(--semers-surface);
+  --surface-app:    var(--semers-bg);
+  --border-default: var(--semers-line);
+  --accent-primary: var(--semers-green);
+
+  --status-ok:    var(--semers-green);
+  --status-warn:  var(--semers-amber);
+  --status-crit:  var(--semers-red);
+  --status-info:  var(--semers-slate);
+}

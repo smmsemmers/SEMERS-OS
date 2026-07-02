@@ -1,0 +1,10 @@
+/* SEMERS OS — elevation.
+   Restrained. Flat cards rely on 1px borders, not shadows.
+   Shadows appear only on floating layers (drawers, modals). */
+:root {
+  --shadow-none:   none;
+  --shadow-card:   none; /* cards use --border-default instead */
+  --shadow-drawer: -8px 0 30px rgba(0,0,0,.16);
+  --shadow-modal:  0 24px 60px rgba(0,0,0,.28);
+  --overlay-scrim: rgba(30,28,24,.38);
+}

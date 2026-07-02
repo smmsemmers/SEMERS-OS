@@ -1,0 +1,13 @@
+<!-- @dsCard group="Colors" viewport="700x190" subtitle="Norm / warning / critical / info — color carries meaning" name="Semantic Status" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>body{margin:0;font-family:var(--font-sans);background:var(--surface-app);padding:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.sw{display:flex;flex-direction:column;gap:6px}.pair{display:flex;border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,.06);width:150px}
+.solid{width:52px;height:48px}.soft{flex:1;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+.n{font-size:12px;font-weight:600;color:var(--text-primary)}.h{font-family:var(--font-mono);font-size:10px;color:var(--text-muted)}</style></head>
+<body><div class="row">
+<div class="sw"><div class="pair"><div class="solid" style="background:var(--semers-green)"></div><div class="soft" style="background:var(--semers-green-soft);color:var(--semers-green-ink)">Норма</div></div><div class="n">OK</div><div class="h">#5C8A3F</div></div>
+<div class="sw"><div class="pair"><div class="solid" style="background:var(--semers-amber)"></div><div class="soft" style="background:var(--semers-amber-soft);color:var(--semers-amber-ink)">Внимание</div></div><div class="n">Warning</div><div class="h">#CC8A2C</div></div>
+<div class="sw"><div class="pair"><div class="solid" style="background:var(--semers-red)"></div><div class="soft" style="background:var(--semers-red-soft);color:var(--semers-red-ink)">Критично</div></div><div class="n">Critical</div><div class="h">#C7503F</div></div>
+<div class="sw"><div class="pair"><div class="solid" style="background:var(--semers-slate)"></div><div class="soft" style="background:var(--semers-slate-soft);color:var(--semers-slate-ink)">В работе</div></div><div class="n">Info</div><div class="h">#5E7A8C</div></div>
+</div></body></html>

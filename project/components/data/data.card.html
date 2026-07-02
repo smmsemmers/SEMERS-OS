@@ -1,0 +1,27 @@
+<!-- @dsCard group="Components" viewport="700x230" subtitle="KpiCard tiles + StatusPill + Tag" name="Data — KPI, Status, Tags" -->
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,300,0,0&display=swap">
+<style>body{margin:0;font-family:var(--font-sans);background:var(--surface-app);padding:20px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="../../_ds_bundle.js"></script></head>
+<body><div id="root"></div>
+<script>
+var h = React.createElement, DS = window.SemersDS, K = DS.KpiCard, P = DS.StatusPill, T = DS.Tag;
+ReactDOM.createRoot(document.getElementById('root')).render(
+  h('div', null,
+    h('div', {className:'grid'},
+      h(K,{label:'Заказы сегодня',value:'14',sub:'8 готовы · 6 в сборке',tone:'ok',icon:'today'}),
+      h(K,{label:'Просроченные отгрузки',value:'3',sub:'Beryozka, Leis, Rewers',tone:'crit',icon:'running_with_errors'}),
+      h(K,{label:'Зависшая дебиторка',value:'€202.1k',sub:'€48k > 90 дней',tone:'warn',icon:'account_balance_wallet'})),
+    h('div', {className:'row'},
+      h(P,{tone:'ok'},'Готов к сборке'),
+      h(P,{tone:'warn'},'Не хватает упаковки'),
+      h(P,{tone:'crit'},'Просрочка отгрузки'),
+      h(P,{tone:'info'},'В сборке'),
+      h(P,{tone:'neutral'},'Выполнен'),
+      h(T,null,'35 г'), h(T,null,'Флоупак'), h(T,null,'LV'))));
+</script></body></html>
