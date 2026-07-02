@@ -1,0 +1,147 @@
+:root {
+  /* base */
+  --ink: #2a2722;
+  --sub: #6e685d;
+  --mut: #9c9586;
+  --line: #e4dfd4;
+  --line-soft: #efebe2;
+  --input-border: #e1dbce;
+  --card: #ffffff;
+  --app-bg: #f1eee7;
+  --cream: #f4f1e9;
+  --header-bg: #fbfaf7;
+  --beige: #efe9dc;
+
+  /* brand / semantic */
+  --green: #5c8a3f;
+  --green-soft: #eaf1e1;
+  --green-ink: #3e6b2c;
+  --apple: #7fa45c;
+
+  --red: #c7503f;
+  --red-soft: #fbe9e5;
+  --red-ink: #9a3527;
+
+  --amber: #cc8a2c;
+  --amber-soft: #faf0dc;
+  --amber-ink: #8a5a12;
+
+  --slate: #5e7a8c;
+  --slate-soft: #e7eef2;
+  --slate-ink: #3c5563;
+
+  /* dark surfaces */
+  --sidebar-bg: #23211c;
+  --sidebar-fg: #cfc9bc;
+  --sidebar-fg-mut: #8b8474;
+  --dark-card: #2e2b25;
+
+  /* type */
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* radius */
+  --r-input: 8px;
+  --r-button: 9px;
+  --r-kpi: 12px;
+  --r-panel: 14px;
+  --r-modal: 16px;
+  --r-pill: 20px;
+
+  /* shadow */
+  --shadow-drawer: -8px 0 30px rgba(0, 0, 0, 0.16);
+  --shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.28);
+  --scrim: rgba(30, 28, 24, 0.34);
+  --scrim-modal: rgba(30, 28, 24, 0.42);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--app-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font-family: var(--font-sans);
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d6d0c4;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ms {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  vertical-align: middle;
+}
+
+@keyframes scl-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes scl-drawer {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes scl-overlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes scl-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+table {
+  border-collapse: collapse;
+}
